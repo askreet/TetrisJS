@@ -13,32 +13,29 @@ loader
     .add("block16", "images/block16.png")
     .load(setup);
 
+function createBoardSprites(board) {
+    let boardSprites = new Array(board.height * board.width);
+
+    for ([x, y] of board.positions()) {
+        let sprite = new Sprite(resources.block16.texture);
+
+        sprite.position.set(x * 16, y * 16);
+
+        boardSprites.push(sprite);
+    }
+
+    return boardSprites;
+}
+
 function setup() {
     "use strict";
 
-    let blockSprite = new Sprite(resources.block16.texture);
     let board = new Board();
+    let boardSprites = createBoardSprites(board);
 
-    drawBoard(board);
+    for (sprite of boardSprites) {
+        app.stage.addChild(sprite);
+    }
 
     console.log("Setup complete!");
-}
-
-function drawBoard(board) {
-    "use strict";
-
-    let thisX = 0;
-    let thisY = 0;
-
-    for (let row of board.board) {
-        thisY++;
-
-        for (let col of row) {
-            thisX++;
-
-            console.log("x=" + thisX + " y=" + thisY + " val=" + col);
-        }
-
-        thisX = 0;
-    }
 }

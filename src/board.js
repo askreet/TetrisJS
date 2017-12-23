@@ -23,6 +23,14 @@ class Board {
         this.height = 22;
         this.board = buildArray(this.width, this.height);
     }
+
+    positions() {
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+                yield [ x, y ];
+            }
+        }
+    }
 }
 
 export default Board;
