@@ -12,7 +12,7 @@ class Board {
         this.board = this.buildArray(10, 22);
     }
 
-    private static buildArray(x, y) {
+    static buildArray(x, y) {
         let theArray = new Uint8Array(y);
 
         for (let i of new Array(x).keys()) {
