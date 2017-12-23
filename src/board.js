@@ -1,5 +1,3 @@
-'use strict';
-
 function buildArray(x, y) {
     let theArray = new Uint8Array(y);
 
@@ -26,7 +24,7 @@ class Board {
         this.board = buildArray(this.width, this.height);
     }
 
-    positions() {
+    * positions() {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 yield [ x, y ];
