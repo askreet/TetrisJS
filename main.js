@@ -7,7 +7,7 @@ PIXI.loader
     .load(setup);
 
 function setup() {
-    let blockSprite = PIXI.Sprite(PIXI.loader.resources["images/block16.png"].texture);
+    let blockSprite = new PIXI.Sprite(PIXI.loader.resources["images/block16.png"].texture);
 
     app.stage.addChild(blockSprite);
 }
