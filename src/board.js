@@ -1,3 +1,5 @@
+'use strict';
+
 function buildArray(x, y) {
     let theArray = new Uint8Array(y);
 
