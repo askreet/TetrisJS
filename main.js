@@ -1,4 +1,4 @@
-import Board from 'src/board';
+import Board from './src/board.js';
 
 let Application = PIXI.Application,
     loader = PIXI.loader,
