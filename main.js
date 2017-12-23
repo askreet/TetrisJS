@@ -27,8 +27,44 @@ function createBoardSprites(board) {
     return boardSprites;
 }
 
+let state = {
+    keys: {},
+    clicks: {},
+    mouse: {},
+};
+
+function setupListeners() {
+    window.addEventListener("keydown", function (event) {
+        state.keys[event.keyCode] = true;
+    });
+
+    window.addEventListener("keyup", function (event) {
+        state.keys[event.keyCode] = false;
+    });
+
+    window.addEventListener("mousedown", function (event) {
+        state.clicks[event.which] = {
+            "clientX": event.clientX,
+            "clientY": event.clientY
+        };
+    });
+
+    window.addEventListener("mouseup", function (event) {
+        state.clicks[event.which] = false;
+    });
+
+    window.addEventListener("mousemove", function (event) {
+        state.mouse.clientX = event.clientX;
+        state.mouse.clientY = event.clientY;
+    });
+}
+
 function setup() {
     "use strict";
+
+    setupListeners();
+
+    requestAnimationFrame();
 
     let board = new Board();
     let boardSprites = createBoardSprites(board);
@@ -38,4 +74,18 @@ function setup() {
     }
 
     console.log("Setup complete!");
+
+    gameLoop();
+}
+
+function gameLoop() {
+    "use strict";
+
+    requestAnimationFrame(gameLoop);
+
+    if (state.keys['q']) {
+        app.destroy();
+    }
+
+    app.renderer.render();
 }
