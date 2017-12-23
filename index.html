@@ -1,9 +1,18 @@
+<!doctype html>
 <html>
-    <head>
-        <title>TetrisJS</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+</head>
+<script src="pixi.min.js"></script>
+<body>
+<script type="text/javascript">
+    let type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+        type = "canvas"
+    }
 
-    <body>
-        <h2>TetrisJS</h2>
-    </body>
+    PIXI.utils.sayHello(type)
+</script>
+</body>
 </html>
