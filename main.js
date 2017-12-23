@@ -14,10 +14,31 @@ loader
     .load(setup);
 
 function setup() {
+    "use strict";
+
     let blockSprite = new Sprite(resources.block16.texture);
     let board = new Board();
 
-    app.stage.addChild(blockSprite);
+    drawBoard(board);
 
     console.log("Setup complete!");
+}
+
+function drawBoard(board) {
+    "use strict";
+
+    let thisX = 0;
+    let thisY = 0;
+
+    for (let row of board.board) {
+        thisY++;
+
+        for (let col of row) {
+            thisX++;
+
+            console.log("x=" + thisX + " y=" + thisY + " val=" + col);
+        }
+
+        thisX = 0;
+    }
 }

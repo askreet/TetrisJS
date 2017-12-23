@@ -1,3 +1,13 @@
+function buildArray(x, y) {
+    let theArray = new Uint8Array(y);
+
+    for (let i of new Array(x).keys()) {
+        theArray[i] = new Uint8Array(x);
+    }
+
+    return theArray;
+}
+
 class Board {
     // EMPTY = 0;
     // CYAN = 1;
@@ -9,17 +19,9 @@ class Board {
     // ORANGE = 7;
 
     constructor() {
-        this.board = this.buildArray(10, 22);
-    }
-
-    static buildArray(x, y) {
-        let theArray = new Uint8Array(y);
-
-        for (let i of new Array(x).keys()) {
-            theArray[i] = new Uint8Array(x);
-        }
-
-        return theArray;
+        this.width = 10;
+        this.height = 22;
+        this.board = buildArray(this.width, this.height);
     }
 }
 
