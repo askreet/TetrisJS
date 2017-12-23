@@ -33,7 +33,7 @@ function setup() {
     let board = new Board();
     let boardSprites = createBoardSprites(board);
 
-    for (sprite of boardSprites) {
+    for (let sprite of boardSprites) {
         app.stage.addChild(sprite);
     }
 
