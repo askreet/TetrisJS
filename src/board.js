@@ -1,12 +1,12 @@
 class Board {
-    EMPTY = 0;
-    CYAN = 1;
-    YELLOW = 2;
-    PURPLE = 3;
-    GREEN = 4;
-    RED = 5;
-    BLUE = 6;
-    ORANGE = 7;
+    // EMPTY = 0;
+    // CYAN = 1;
+    // YELLOW = 2;
+    // PURPLE = 3;
+    // GREEN = 4;
+    // RED = 5;
+    // BLUE = 6;
+    // ORANGE = 7;
 
     constructor() {
         this.board = this.buildArray(10, 22);
