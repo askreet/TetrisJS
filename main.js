@@ -16,7 +16,7 @@ loader
 function createBoardSprites(board) {
     let boardSprites = new Array(board.height * board.width);
 
-    for ([x, y] of board.positions()) {
+    for (let [x, y] of board.positions()) {
         let sprite = new Sprite(resources.block16.texture);
 
         sprite.position.set(x * 16, y * 16);
