@@ -31,16 +31,26 @@ function onKeyDown(key, callback) {
     });
 }
 
+function makeNewGhost() {
+    gameState.ghost = new Ghost([
+        new Location(1, 1),
+        new Location(1, 2),
+        new Location(2, 2),
+        new Location(2, 3),
+    ]);
+}
+
 function moveGhostDown() {
     if (!gameState.ghost) return;
 
     if (gameState.ghost.moveDownShouldAbsorb(gameState.board)) {
-        gameState.board.absorbGhost(ghost);
-        // makeNewGhost();
+        gameState.board.absorbGhost(gameState.ghost);
+        makeNewGhost();
     } else {
         gameState.ghost.down();
     }
 }
+
 function setup() {
     "use strict";
 
@@ -54,12 +64,7 @@ function setup() {
         if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
     });
 
-    gameState.ghost = new Ghost([
-        new Location(1, 1),
-        new Location(1, 2),
-        new Location(2, 2),
-        new Location(2, 3),
-    ]);
+    makeNewGhost();
 
     app.stage.addChild(gameState.sprites);
 
