@@ -80,7 +80,10 @@ function addGhostSprites(ghost, sprites) {
     for (let location of ghost.locations) {
         let sprite = new Sprite(resources.block16.texture);
 
-        sprite.position.set(location.x * 16, location.y * 16);
+        let xPos = location.x * 16;
+        let yPos = location.y * 16;
+        console.log("Adding sprite to x=" + xPos + " y=" + yPos);
+        sprite.position.set(xPos, yPos);
 
         sprites.addChild(sprite);
     }
