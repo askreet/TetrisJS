@@ -1,5 +1,5 @@
-import { Board, BORDER, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/board.js";
-import { Ghost } from './src/ghost.js';
+import { Playfield, BORDER, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/Playfield.js";
+import { FallingPiece } from './src/FallingPiece.js';
 
 let loader = PIXI.loader,
     resources = PIXI.loader.resources,
@@ -10,8 +10,8 @@ let keyListener = new window.keypress.Listener();
 let gameState = {
     lastDrop: performance.now(),
     dropTime: 1000, // "ticks" -- see Performance
-    board: new Board(),
-    ghost: new Ghost([]),
+    board: new Playfield(),
+    ghost: new FallingPiece([]),
     sprites: new PIXI.Container(),
 };
 
@@ -36,36 +36,36 @@ function randWithin(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function makeNewGhost() {
+function makeNewFallingPiece() {
     let blockType = randWithin(1, 7);
 
     switch (blockType) {
         case 1:
-            return Ghost.newIBlock();
+            return FallingPiece.newIBlock();
         case 2:
-            return Ghost.newOBlock();
+            return FallingPiece.newOBlock();
         case 3:
-            return Ghost.newTBlock();
+            return FallingPiece.newTBlock();
         case 4:
-            return Ghost.newSBlock();
+            return FallingPiece.newSBlock();
         case 5:
-            return Ghost.newZBlock();
+            return FallingPiece.newZBlock();
         case 6:
-            return Ghost.newJBlock();
+            return FallingPiece.newJBlock();
         case 7:
-            return Ghost.newLBlock();
+            return FallingPiece.newLBlock();
         default:
             throw new RangeException("Unexpected value.");
     }
 
 }
 
-function moveGhostDown() {
+function moveFallingPieceDown() {
     if (!gameState.ghost) return;
 
     if (gameState.ghost.moveDownShouldAbsorb(gameState.board)) {
-        gameState.board.absorbGhost(gameState.ghost);
-        gameState.ghost = makeNewGhost();
+        gameState.board.absorbFallingPiece(gameState.ghost);
+        gameState.ghost = makeNewFallingPiece();
     } else {
         gameState.ghost.down();
     }
@@ -78,13 +78,13 @@ function setup() {
         if (gameState.ghost) gameState.ghost.attemptLeft(gameState.board);
     });
     onKeyDown('s', function() {
-        moveGhostDown();
+        moveFallingPieceDown();
     });
     onKeyDown('d', function() {
         if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
     });
 
-    gameState.ghost = makeNewGhost();
+    gameState.ghost = makeNewFallingPiece();
 
     gameState.sprites.position.set(50, 90);
 
@@ -100,16 +100,16 @@ function update(delta) {
     let startUpdate = performance.now();
 
     if (startUpdate - gameState.lastDrop > gameState.dropTime) {
-        moveGhostDown();
+        moveFallingPieceDown();
         gameState.lastDrop = startUpdate;
     }
 
     gameState.sprites.removeChildren();
 
-    gameState.board.occupiedSpaces().map(loc => createLocationSprite(loc))
+    gameState.board.occupiedCells().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    gameState.ghost.locations.map(loc => createLocationSprite(loc))
+    gameState.ghost.cells.map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
     // let t = (performance.now() - startUpdate) / 1000;

@@ -1,4 +1,4 @@
-import Location from './location.js';
+import { Cell } from './Cell.js';
 
 function buildArray(x, y) {
     let theArray = new Array(y);
@@ -20,14 +20,14 @@ export const BLUE = 6;
 export const ORANGE = 7;
 export const BORDER = 8;
 
-export class Board {
+export class Playfield {
     constructor() {
         this.width = 10;
         this.height = 22;
         this.board = buildArray(this.width, this.height);
     }
 
-    isValidEmptyLocation(location) {
+    isValidEmptyCell(location) {
         if (location.x < 1 || location.y < 1) {
             return false;
         }
@@ -36,54 +36,58 @@ export class Board {
             return false;
         }
 
-        return this.stateAtLocation(location) === EMPTY;
+        return !this.anythingAt(location.x, location.y);
     }
 
-    occupiedSpaces() {
+    occupiedCells() {
         let spaces = [];
 
         for (let y=0; y < this.height + 1; y++) {
             // left wall
-            spaces.push(new Location(0, y, BORDER));
+            spaces.push(new Cell(0, y, BORDER));
 
             // right wall
-            spaces.push(new Location(this.width + 1, y, BORDER));
+            spaces.push(new Cell(this.width + 1, y, BORDER));
         }
 
         for (let x=0; x < this.width + 2; x++) {
             // floor
-            spaces.push(new Location(x, this.height + 1, BORDER));
+            spaces.push(new Cell(x, this.height + 1, BORDER));
         }
 
-        for (let location of this.everyLocation()) {
-            if (this.stateAtLocation(location) !== EMPTY) {
-                spaces.push(location);
+        for (let cell of this.everyCell()) {
+            if (this.anythingAt(cell.x, cell.y)) {
+                spaces.push(cell);
             }
         }
 
         return spaces;
     }
 
-    stateAtLocation(location) {
-        return this.board[location.y - 1][location.x - 1];
+    anythingAt(x, y) {
+        return this.cellAt(x, y).state !== EMPTY;
     }
 
-    setStateAtLocation(location, state) {
+    cellAt(x, y) {
+        return new Cell(x, y, this.board[y - 1][x - 1]);
+    }
+
+    setStateAtCell(location, state) {
         console.log("Setting state " + state + " at " + location);
         this.board[location.y - 1][location.x - 1] = state;
     }
 
-    * everyLocation() {
+    * everyCell() {
         for (let x = 1; x <= this.width; x++) {
             for (let y = 1; y <= this.height; y++) {
-                yield new Location(x, y, this.board[y - 1][x - 1]);
+                yield new Cell(x, y, this.board[y - 1][x - 1]);
             }
         }
     }
 
-    absorbGhost(ghost) {
-        for (let location of ghost.locations) {
-            this.setStateAtLocation(location, location.state);
+    absorbFallingPiece(fallingPiece) {
+        for (let location of fallingPiece.cells) {
+            this.setStateAtCell(location, location.state);
         }
     }
 }
