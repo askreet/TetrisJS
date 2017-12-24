@@ -31,13 +31,34 @@ function onKeyDown(key, callback) {
     });
 }
 
+function randWithin(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function makeNewGhost() {
-    gameState.ghost = new Ghost([
-        new Location(1, 1, CYAN),
-        new Location(1, 2, CYAN),
-        new Location(2, 2, CYAN),
-        new Location(2, 3, CYAN),
-    ]);
+    let blockType = randWithin(1, 7);
+
+    switch (blockType) {
+        case 1:
+            return Ghost.newIBlock();
+        case 2:
+            return Ghost.newOBlock();
+        case 3:
+            return Ghost.newTBlock();
+        case 4:
+            return Ghost.newSBlock();
+        case 5:
+            return Ghost.newZBlock();
+        case 6:
+            return Ghost.newJBlock();
+        case 7:
+            return Ghost.newLBlock();
+        default:
+            throw new RangeException("Unexpected value.");
+    }
+
 }
 
 function moveGhostDown() {
@@ -77,7 +98,6 @@ function setup() {
 
 function update(delta) {
     "use strict";
-
     let startUpdate = performance.now();
 
     if (startUpdate - gameState.lastDrop > gameState.dropTime) {
@@ -93,9 +113,9 @@ function update(delta) {
     gameState.ghost.locations.map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    let t = (performance.now() - startUpdate) / 1000;
+    // let t = (performance.now() - startUpdate) / 1000;
 
-    console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
+    // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
 function createLocationSprite(location) {
