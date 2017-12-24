@@ -36,13 +36,13 @@ function setup() {
     "use strict";
 
     onKeyDown('a', function() {
-        if (gameState.ghost) gameState.ghost.attemptLeft(board);
+        if (gameState.ghost) gameState.ghost.attemptLeft(gameState.board);
     });
     onKeyDown('s', function() {
-        if (gameState.ghost) gameState.ghost.attemptDown(board);
+        if (gameState.ghost) gameState.ghost.attemptDown(gameState.board);
     });
     onKeyDown('d', function() {
-        if (gameState.ghost) gameState.ghost.attemptRight(board);
+        if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
     });
 
     gameState.ghost = new Ghost([
@@ -69,7 +69,7 @@ function update(delta) {
     gameState.sprites.removeChildren();
 
     // addBoardSprites(board, gameState.sprites);
-    addGhostSprites(ghost, gameState.sprites);
+    addGhostSprites(gameState.ghost, gameState.sprites);
 
     let t = (performance.now() - startUpdate) / 1000;
 
