@@ -66,7 +66,7 @@ function setup() {
 
     makeNewGhost();
 
-    gameState.sprites.position.set(50, 150);
+    gameState.sprites.position.set(50, 75);
 
     app.stage.addChild(gameState.sprites);
 
