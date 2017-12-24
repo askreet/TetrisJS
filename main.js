@@ -1,6 +1,5 @@
 import { Board, CYAN, BORDER } from './src/board.js';
-import Ghost from './src/ghost.js';
-import Location from './src/location.js';
+import { Ghost } from './src/ghost.js';
 
 let loader = PIXI.loader,
     resources = PIXI.loader.resources,
