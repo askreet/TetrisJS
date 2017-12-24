@@ -21,6 +21,10 @@ export class Cell {
         return new Cell(this.x, this.y + 1, this.state);
     }
 
+    translate(x, y) {
+        return new Cell(this.x + x, this.y + y, this.state);
+    }
+
     toString() {
         return "Cell(x=" + this.x + ", y=" + this.y + ", state=" + this.state + ")";
     }

@@ -1,16 +1,18 @@
 import {BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./Playfield.js";
-import { Cell } from "./Cell.js";
+import {CellBox3} from "./CellBox3.js";
 
 export class FallingPiece {
-    constructor(cells) {
-        this._cells = cells;
+    constructor(cellBox) {
+        this._cellBox = cellBox;
+        this._offsetX = 0;
+        this._offsetY = 0;
     }
 
     attemptRight(board) {
-        let proposedNewCells = this._cells.map(loc => loc.right());
+        let proposedNewCells = this.getCells().map(loc => loc.right());
 
         if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
-            this._cells = proposedNewCells;
+            this._offsetX += 1;
             return true;
         }
 
@@ -18,10 +20,10 @@ export class FallingPiece {
     }
 
     attemptLeft(board) {
-        let proposedNewCells = this._cells.map(loc => loc.left());
+        let proposedNewCells = this.getCells().map(loc => loc.left());
 
         if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
-            this._cells = proposedNewCells;
+            this._offsetX -= 1;
             return true;
         }
 
@@ -29,54 +31,92 @@ export class FallingPiece {
     }
 
     down() {
-        this._cells = this._cells.map(loc => loc.down());
+        this._offsetY += 1;
     }
 
     moveDownShouldAbsorb(board) {
-        let proposedNewCell = this._cells.map(loc => loc.down());
+        let proposedNewCell = this.getCells().map(loc => loc.down());
 
         return !proposedNewCell.every(loc => board.isValidEmptyCell(loc));
     }
 
     getCells() {
-        return this._cells;
+        return this._cellBox.getCells().map(
+            cell => cell.translate(this._offsetX, this._offsetY)
+        );
     }
 
     static newIBlock() {
-        return this.newGhost(1, 2, 2, 2, 3, 2, 4, 2, CYAN);
+        // return this.newGhost(1, 2, 2, 2, 3, 2, 4, 2, CYAN);
     }
 
     static newOBlock() {
-        return this.newGhost(2, 1, 3, 1, 2, 2, 3, 2, YELLOW);
+        // return this.newGhost(2, 1, 3, 1, 2, 2, 3, 2, YELLOW);
     }
 
     static newTBlock() {
-        return this.newGhost(1, 2, 2, 2, 3, 2, 2, 1, PURPLE);
+        return new FallingPiece(
+            new CellBox3(
+                [
+                    0, 1, 0,
+                    1, 1, 1,
+                    0, 0, 0,
+                ],
+                PURPLE
+            )
+        );
     }
 
     static newSBlock() {
-        return this.newGhost(1, 2, 2, 2, 2, 1, 3, 1, GREEN);
+        return new FallingPiece(
+            new CellBox3(
+                [
+                    0, 1, 1,
+                    1, 1, 0,
+                    0, 0, 0,
+                ],
+                GREEN
+            )
+        );
     }
 
     static newZBlock() {
-        return this.newGhost(1, 1, 2, 1, 2, 2, 3, 2, RED);
+        return new FallingPiece(
+            new CellBox3(
+                [
+                    1, 1, 0,
+                    0, 1, 1,
+                    0, 0, 0,
+                ],
+                RED
+            )
+        );
     }
 
     static newJBlock() {
-        return this.newGhost(1, 1, 1, 2, 2, 2, 3, 2, BLUE);
+        return new FallingPiece(
+            new CellBox3(
+                [
+                    1, 0, 0,
+                    1, 1, 1,
+                    0, 0, 0,
+                ],
+                BLUE
+            )
+        );
     }
 
     static newLBlock() {
-        return this.newGhost(1, 2, 2, 2, 3, 2, 3, 1, ORANGE);
-    }
-
-    static newGhost(x1, y1, x2, y2, x3, y3, x4, y4, state) {
-        return new FallingPiece([
-            new Cell(x1, y1, state),
-            new Cell(x2, y2, state),
-            new Cell(x3, y3, state),
-            new Cell(x4, y4, state),
-        ]);
+        return new FallingPiece(
+            new CellBox3(
+                [
+                    0, 0, 1,
+                    1, 1, 1,
+                    0, 0, 0,
+                ],
+                ORANGE
+            )
+        );
     }
 }
 
