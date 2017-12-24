@@ -6,6 +6,7 @@ let Application = PIXI.Application,
     Sprite = PIXI.Sprite;
 
 let app = new Application({ width: 800, height: 600 });
+let keyListener = new window.keypress.Listener();
 
 document.body.appendChild(app.view);
 
@@ -27,42 +28,8 @@ function createBoardSprites(board) {
     return boardSprites;
 }
 
-let state = {
-    keys: {},
-    clicks: {},
-    mouse: {},
-};
-
-function setupListeners() {
-    window.addEventListener("keydown", function (event) {
-        state.keys[event.keyCode] = true;
-    });
-
-    window.addEventListener("keyup", function (event) {
-        state.keys[event.keyCode] = false;
-    });
-
-    window.addEventListener("mousedown", function (event) {
-        state.clicks[event.which] = {
-            "clientX": event.clientX,
-            "clientY": event.clientY
-        };
-    });
-
-    window.addEventListener("mouseup", function (event) {
-        state.clicks[event.which] = false;
-    });
-
-    window.addEventListener("mousemove", function (event) {
-        state.mouse.clientX = event.clientX;
-        state.mouse.clientY = event.clientY;
-    });
-}
-
 function setup() {
     "use strict";
-
-    setupListeners();
 
     let board = new Board();
     let boardSprites = createBoardSprites(board);
@@ -71,6 +38,13 @@ function setup() {
         app.stage.addChild(sprite);
     }
 
+    keyListener.register_combo({
+        keys: 'q',
+        on_keydown: function(e) {
+            console.log("q has been pressed.")
+        }
+    });
+
     app.ticker.add(delta => update(delta));
 
     console.log("Setup complete!");
@@ -78,6 +52,8 @@ function setup() {
 
 function update(delta) {
     "use strict";
+
+    console.log("Game update.");
 
     if (state.keys['q']) {
         alert("q was pressed");
