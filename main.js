@@ -66,7 +66,7 @@ function update(delta) {
         gameState.ghost.attemptDown(gameState.board);
     }
 
-    // gameState.sprites.removeChildren();
+    gameState.sprites.removeChildren();
 
     // addBoardSprites(board, gameState.sprites);
     addGhostSprites(gameState.ghost, gameState.sprites);
@@ -77,7 +77,7 @@ function update(delta) {
 }
 
 function addGhostSprites(ghost, sprites) {
-    for (location of ghost.locations) {
+    for (let location of ghost.locations) {
         let sprite = new Sprite(resources.block16.texture);
 
         sprite.position.set(location.x * 16, location.y * 16);
