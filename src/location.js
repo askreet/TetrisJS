@@ -1,16 +1,7 @@
-const maxX = 10;
-const maxY = 22;
-const minX = 1;
-const minY = 1;
-
-function clamp(val, min, max) {
-    return Math.min(Math.max(val, min), max);
-}
-
 class Location {
     constructor(x, y) {
-        this.x = clamp(x, minX, maxX);
-        this.y = clamp(y, minY, maxY);
+        this.x = x;
+        this.y = y;
     }
 
     left() {
