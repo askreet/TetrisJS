@@ -25,15 +25,14 @@ class Ghost {
         return false;
     }
 
-    attemptDown(board) {
-        let proposedNewLocations = this.locations.map(loc => loc.down());
+    down() {
+        this.locations = this.locations.map(loc => loc.down());
+    }
 
-        if (proposedNewLocations.every(loc => board.isValidEmptyLocation(loc))) {
-            this.locations = proposedNewLocations;
-            return true;
-        }
+    moveDownShouldAbsorb(board) {
+        let proposedNewLocation = this.locations.map(loc => loc.down());
 
-        return false;
+        return !proposedNewLocation.every(loc => board.isValidEmptyLocation(loc));
     }
 }
 

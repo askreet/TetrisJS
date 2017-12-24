@@ -2,16 +2,15 @@ import Board from './src/board.js';
 import Ghost from './src/ghost.js';
 import Location from './src/location.js';
 
-let Application = PIXI.Application,
-    loader = PIXI.loader,
+let loader = PIXI.loader,
     resources = PIXI.loader.resources,
     Sprite = PIXI.Sprite;
 
-let app = new Application({ width: 800, height: 600 });
+let app = new PIXI.Application({ width: 800, height: 600 });
 let keyListener = new window.keypress.Listener();
 let gameState = {
     lastDrop: performance.now(),
-    dropTime: 1000, // microseconds?
+    dropTime: 1000, // "ticks" -- see Performance
     board: new Board(),
     ghost: new Ghost(),
     sprites: new PIXI.Container(),
@@ -32,6 +31,16 @@ function onKeyDown(key, callback) {
     });
 }
 
+function moveGhostDown() {
+    if (!gameState.ghost) return;
+
+    if (gameState.ghost.moveDownShouldAbsorb(gameState.board)) {
+        gameState.board.absorbGhost(ghost);
+        // makeNewGhost();
+    } else {
+        gameState.ghost.down();
+    }
+}
 function setup() {
     "use strict";
 
@@ -39,7 +48,7 @@ function setup() {
         if (gameState.ghost) gameState.ghost.attemptLeft(gameState.board);
     });
     onKeyDown('s', function() {
-        if (gameState.ghost) gameState.ghost.attemptDown(gameState.board);
+        moveGhostDown();
     });
     onKeyDown('d', function() {
         if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
@@ -65,7 +74,7 @@ function update(delta) {
     let startUpdate = performance.now();
 
     if (startUpdate - gameState.lastDrop > gameState.dropTime) {
-        gameState.ghost.attemptDown(gameState.board);
+        gameState.ghost.down(gameState.board);
         gameState.lastDrop = startUpdate;
     }
 

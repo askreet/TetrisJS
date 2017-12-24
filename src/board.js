@@ -56,11 +56,35 @@ class Board {
             spaces.push(new Location(x, this.height + 1));
         }
 
+        for (let location of this.everyLocation()) {
+            if (this.stateAtLocation(location) !== EMPTY) {
+                spaces.push(location);
+            }
+        }
+
         return spaces;
     }
 
     stateAtLocation(location) {
         return this.board[location.y - 1][location.x - 1];
+    }
+
+    setStateAtLocation(location, state) {
+        this.board[location.y - 1][location.x - 1] = state;
+    }
+
+    * everyLocation() {
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+                yield new Location(x, y);
+            }
+        }
+    }
+
+    absorbGhost(ghost) {
+        for (let location of ghost.locations) {
+            this.setStateAtLocation(location, NOT_EMPTY);
+        }
     }
 }
 
