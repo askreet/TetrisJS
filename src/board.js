@@ -76,7 +76,7 @@ export class Board {
     * everyLocation() {
         for (let x = 1; x <= this.width; x++) {
             for (let y = 1; y <= this.height; y++) {
-                yield new Location(x, y, this.board[location.y - 1][location.x - 1]);
+                yield new Location(x, y, this.board[y - 1][x - 1]);
             }
         }
     }
