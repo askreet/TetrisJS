@@ -47,12 +47,12 @@ export class Board {
             spaces.push(new Location(0, y));
 
             // right wall
-            spaces.push(new Location(this.width + 1, y));
+            spaces.push(new Location(this.width + 1, y, BORDER));
         }
 
         for (let x=0; x < this.width + 2; x++) {
             // floor
-            spaces.push(new Location(x, this.height + 1));
+            spaces.push(new Location(x, this.height + 1, BORDER));
         }
 
         for (let location of this.everyLocation()) {
@@ -76,7 +76,7 @@ export class Board {
     * everyLocation() {
         for (let x = 1; x <= this.width; x++) {
             for (let y = 1; y <= this.height; y++) {
-                yield new Location(x, y);
+                yield new Location(x, y, CYAN);
             }
         }
     }
