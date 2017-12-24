@@ -8,28 +8,42 @@ function buildArray(x, y) {
     return theArray;
 }
 
-class Board {
-    // EMPTY = 0;
-    // CYAN = 1;
-    // YELLOW = 2;
-    // PURPLE = 3;
-    // GREEN = 4;
-    // RED = 5;
-    // BLUE = 6;
-    // ORANGE = 7;
+const EMPTY = 0;
+const NOT_EMPTY = 1;
+// EMPTY = 0;
+// CYAN = 1;
+// YELLOW = 2;
+// PURPLE = 3;
+// GREEN = 4;
+// RED = 5;
+// BLUE = 6;
+// ORANGE = 7;
 
+class Board {
     constructor() {
         this.width = 10;
         this.height = 22;
         this.board = buildArray(this.width, this.height);
     }
 
-    * positions() {
-        for (let x = 0; x < this.width; x++) {
-            for (let y = 0; y < this.height; y++) {
-                yield [ x, y ];
-            }
+    isValidEmptyLocation(location) {
+        if (location.x < 1 || location.y < 1) {
+            return false;
         }
+
+        if (location.x > this.width || location.y > this.width) {
+            return false;
+        }
+
+        return this.stateAtLocation(location) === EMPTY;
+    }
+
+    getNonEmptyLocations() {
+
+    }
+
+    stateAtLocation(location) {
+        return this.board[location.x - 1][location.y - 1];
     }
 }
 

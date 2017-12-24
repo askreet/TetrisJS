@@ -4,15 +4,36 @@ class Ghost {
     }
 
     attemptRight(board) {
-        this.locations = this.locations.map(loc => loc.right());
+        let proposedNewLocations = this.locations.map(loc => loc.right());
+
+        if (proposedNewLocations.every(loc => board.isValidEmptyLocation(loc))) {
+            this.locations = proposedNewLocations;
+            return true;
+        }
+
+        return false;
     }
 
     attemptLeft(board) {
-        this.locations = this.locations.map(loc => loc.left());
+        let proposedNewLocations = this.locations.map(loc => loc.left());
+
+        if (proposedNewLocations.every(loc => board.isValidEmptyLocation(loc))) {
+            this.locations = proposedNewLocations;
+            return true;
+        }
+
+        return false;
     }
 
     attemptDown(board) {
-        this.locations = this.locations.map(loc => loc.down());
+        let proposedNewLocations = this.locations.map(loc => loc.down());
+
+        if (proposedNewLocations.every(loc => board.isValidEmptyLocation(loc))) {
+            this.locations = proposedNewLocations;
+            return true;
+        }
+
+        return false;
     }
 }
 
