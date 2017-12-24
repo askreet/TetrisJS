@@ -12,7 +12,7 @@ let gameState = {
     lastDrop: performance.now(),
     dropTime: 1000, // "ticks" -- see Performance
     board: new Board(),
-    ghost: new Ghost(),
+    ghost: new Ghost([]),
     sprites: new PIXI.Container(),
 };
 
