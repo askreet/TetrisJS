@@ -1,7 +1,7 @@
 function buildArray(x, y) {
-    let theArray = new Uint8Array(y);
+    let theArray = new Array(y);
 
-    for (let i of new Array(x).keys()) {
+    for (let i = 0; i < y; i++) {
         theArray[i] = new Uint8Array(x);
     }
 
@@ -47,7 +47,7 @@ class Board {
     }
 
     stateAtLocation(location) {
-        return this.board[location.x - 1][location.y - 1];
+        return this.board[location.y - 1][location.x - 1];
     }
 }
 
