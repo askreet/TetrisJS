@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Tests </title>
+    <link rel="stylesheet" href="https://unpkg.com/mocha@4.0.1/mocha.css" />
+</head>
+<body>
+<div id="mocha"></div>
+
+<script src="https://unpkg.com/chai@4.1.2/chai.js"></script>
+<script src="https://unpkg.com/mocha@4.0.1/mocha.js"></script>
+<script>
+    mocha.ui('bdd');
+    mocha.reporter('html');
+    var expect = chai.expect;
+    chai.config.showDiff = true;
+</script>
+<script type="module" src="test/CellBox.test.js"></script>
+<script type="module">
+    mocha.checkLeaks();
+    mocha.run();
+</script>
+</body>
+</html>

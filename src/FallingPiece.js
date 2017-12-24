@@ -3,14 +3,14 @@ import { Cell } from "./Cell.js";
 
 export class FallingPiece {
     constructor(cells) {
-        this.cells = cells;
+        this._cells = cells;
     }
 
     attemptRight(board) {
-        let proposedNewCells = this.cells.map(loc => loc.right());
+        let proposedNewCells = this._cells.map(loc => loc.right());
 
         if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
-            this.cells = proposedNewCells;
+            this._cells = proposedNewCells;
             return true;
         }
 
@@ -18,10 +18,10 @@ export class FallingPiece {
     }
 
     attemptLeft(board) {
-        let proposedNewCells = this.cells.map(loc => loc.left());
+        let proposedNewCells = this._cells.map(loc => loc.left());
 
         if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
-            this.cells = proposedNewCells;
+            this._cells = proposedNewCells;
             return true;
         }
 
@@ -29,13 +29,17 @@ export class FallingPiece {
     }
 
     down() {
-        this.cells = this.cells.map(loc => loc.down());
+        this._cells = this._cells.map(loc => loc.down());
     }
 
     moveDownShouldAbsorb(board) {
-        let proposedNewCell = this.cells.map(loc => loc.down());
+        let proposedNewCell = this._cells.map(loc => loc.down());
 
         return !proposedNewCell.every(loc => board.isValidEmptyCell(loc));
+    }
+
+    getCells() {
+        return this._cells;
     }
 
     static newIBlock() {
@@ -74,6 +78,5 @@ export class FallingPiece {
             new Cell(x4, y4, state),
         ]);
     }
-
 }
 

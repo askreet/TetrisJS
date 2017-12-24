@@ -80,13 +80,13 @@ export class Playfield {
     * everyCell() {
         for (let x = 1; x <= this.width; x++) {
             for (let y = 1; y <= this.height; y++) {
-                yield new Cell(x, y, this.board[y - 1][x - 1]);
+                yield this.cellAt(x, y);
             }
         }
     }
 
     absorbFallingPiece(fallingPiece) {
-        for (let location of fallingPiece.cells) {
+        for (let location of fallingPiece.getCells()) {
             this.setStateAtCell(location, location.state);
         }
     }

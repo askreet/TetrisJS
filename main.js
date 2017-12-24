@@ -41,9 +41,9 @@ function makeNewFallingPiece() {
 
     switch (blockType) {
         case 1:
-            return FallingPiece.newIBlock();
+            // return FallingPiece.newIBlock();
         case 2:
-            return FallingPiece.newOBlock();
+            // return FallingPiece.newOBlock();
         case 3:
             return FallingPiece.newTBlock();
         case 4:
@@ -109,7 +109,7 @@ function update(delta) {
     gameState.board.occupiedCells().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    gameState.ghost.cells.map(loc => createLocationSprite(loc))
+    gameState.ghost._cells.map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
     // let t = (performance.now() - startUpdate) / 1000;
