@@ -1,4 +1,4 @@
-import { Cell } from './Cell.js';
+import {Cell} from './Cell.js';
 
 function buildArray(x, y) {
     let theArray = new Array(y);
@@ -20,10 +20,17 @@ export const BLUE = 6;
 export const ORANGE = 7;
 export const BORDER = 8;
 
+function range(start, count) {
+    return Array.apply(0, new Array(count))
+        .map(function (element, index) {
+            return index + start;
+        });
+}
+
 export class Playfield {
-    constructor() {
-        this.width = 10;
-        this.height = 22;
+    constructor(width = 10, height = 22) {
+        this.width = width;
+        this.height = height;
         this.board = buildArray(this.width, this.height);
     }
 
@@ -46,7 +53,7 @@ export class Playfield {
     occupiedCells() {
         let spaces = [];
 
-        for (let y=0; y < this.height + 1; y++) {
+        for (let y = 0; y < this.height + 1; y++) {
             // left wall
             spaces.push(new Cell(0, y, BORDER));
 
@@ -54,7 +61,7 @@ export class Playfield {
             spaces.push(new Cell(this.width + 1, y, BORDER));
         }
 
-        for (let x=0; x < this.width + 2; x++) {
+        for (let x = 0; x < this.width + 2; x++) {
             // floor
             spaces.push(new Cell(x, this.height + 1, BORDER));
         }
@@ -76,9 +83,12 @@ export class Playfield {
         return new Cell(x, y, this.board[y - 1][x - 1]);
     }
 
-    setStateAtCell(location, state) {
-        console.log("Setting state " + state + " at " + location);
-        this.board[location.y - 1][location.x - 1] = state;
+    setStateAtCell(cell, state) {
+        this.board[cell.y - 1][cell.x - 1] = state;
+    }
+
+    setStateAt(x, y, state) {
+        this.board[y - 1][x - 1] = state;
     }
 
     * everyCell() {
@@ -90,8 +100,42 @@ export class Playfield {
     }
 
     absorbFallingPiece(fallingPiece) {
-        for (let location of fallingPiece.getCells()) {
-            this.setStateAtCell(location, location.state);
+        for (let cell of fallingPiece.getCells()) {
+            this.setStateAtCell(cell, cell.state);
+        }
+
+        this.checkForRowClears();
+    }
+
+    checkForRowClears() {
+        for (let y = this.height; y >= 1; y--) {
+            if (this.rowIsFull(y)) {
+                this.clearRow(y);
+
+                // all rows have moved down now, need to recheck this row
+                y++;
+            }
+        }
+    }
+
+    rowIsFull(y) {
+        return range(1, this.width).map(x => this.cellAt(x, y)).every(cell => cell.state !== EMPTY);
+    }
+
+    clearRow(y) {
+        range(1, this.width).forEach(x => this.setStateAt(x, y, EMPTY));
+
+        this.gravityRow(y);
+    }
+
+    gravityRow(y) {
+        console.log("gravityRow(" + y + ")");
+        range(1, this.width).forEach(x => this.setStateAt(x, y, this.cellAt(x, y - 1).state))
+
+        if (y > 2) {
+            this.gravityRow(y - 1);
+        } else {
+            range(1, this.width).forEach(x => this.setStateAt(x, 1, EMPTY));
         }
     }
 }
