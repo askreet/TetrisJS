@@ -1,4 +1,4 @@
-import { Board, CYAN, BORDER } from './src/board.js';
+import { Board, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/board.js";
 import { Ghost } from './src/ghost.js';
 
 let loader = PIXI.loader,
@@ -124,14 +124,33 @@ function createLocationSprite(location) {
     let yPos = location.y * 16;
     sprite.position.set(xPos, yPos);
 
-    switch (location.state) {
-        case CYAN:
-            sprite.tint = 0x00FFFF;
-            break;
-        case BORDER:
-            sprite.tint = 0x444444;
-            break;
-    }
+    sprite.tint = tintForState(location.state);
 
     return sprite;
+}
+
+function tintForState(state) {
+    "use strict";
+
+    switch (state) {
+        case EMPTY:
+            return 0x000000;
+        case CYAN:
+            return 0x00FFFF;
+        case YELLOW:
+            return 0xFFFF00;
+        case PURPLE:
+            return 0xFF00FF;
+        case GREEN:
+            return 0x00FF00;
+        case RED:
+            return 0xFF0000;
+        case BLUE:
+            return 0x0000FF;
+        case ORANGE:
+            return 0xFFA500;
+        case BORDER:
+            return 0x444444;
+    }
+
 }

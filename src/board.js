@@ -83,7 +83,7 @@ export class Board {
 
     absorbGhost(ghost) {
         for (let location of ghost.locations) {
-            this.setStateAtLocation(location, CYAN);
+            this.setStateAtLocation(location, location.state);
         }
     }
 }
