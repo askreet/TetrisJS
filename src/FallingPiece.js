@@ -8,10 +8,10 @@ export class FallingPiece {
         this._offsetY = 0;
     }
 
-    attemptRight(board) {
+    attemptRight(playfield) {
         let proposedNewCells = this.getCells().map(loc => loc.right());
 
-        if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
+        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
             this._offsetX += 1;
             return true;
         }
@@ -19,11 +19,23 @@ export class FallingPiece {
         return false;
     }
 
-    attemptLeft(board) {
+    attemptLeft(playfield) {
         let proposedNewCells = this.getCells().map(loc => loc.left());
 
-        if (proposedNewCells.every(loc => board.isValidEmptyCell(loc))) {
+        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
             this._offsetX -= 1;
+            return true;
+        }
+
+        return false;
+    }
+
+    attemptRotate(playfield) {
+        // TODO: This is a mess.
+        let proposedNewCells = this._cellBox.rotate().getCells().map(cell => cell.translate(this._offsetX, this._offsetY));
+
+        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
+            this._cellBox = this._cellBox.rotate();
             return true;
         }
 
@@ -34,10 +46,10 @@ export class FallingPiece {
         this._offsetY += 1;
     }
 
-    moveDownShouldAbsorb(board) {
+    moveDownShouldAbsorb(playfield) {
         let proposedNewCell = this.getCells().map(loc => loc.down());
 
-        return !proposedNewCell.every(loc => board.isValidEmptyCell(loc));
+        return !proposedNewCell.every(loc => playfield.isValidEmptyCell(loc));
     }
 
     getCells() {

@@ -83,6 +83,9 @@ function setup() {
     onKeyDown('d', function() {
         if (gameState.fallingPiece) gameState.fallingPiece.attemptRight(gameState.board);
     });
+    onKeyDown('w', function() {
+        if (gameState.fallingPiece) gameState.fallingPiece.attemptRotate(gameState.board);
+    })
 
     gameState.fallingPiece = makeNewFallingPiece();
 
