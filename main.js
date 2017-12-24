@@ -1,6 +1,7 @@
-import Board from './src/board.js';
+import { Board, CYAN } from './src/board.js';
 import Ghost from './src/ghost.js';
 import Location from './src/location.js';
+import {BORDER} from "./src/board";
 
 let loader = PIXI.loader,
     resources = PIXI.loader.resources,
@@ -33,10 +34,10 @@ function onKeyDown(key, callback) {
 
 function makeNewGhost() {
     gameState.ghost = new Ghost([
-        new Location(1, 1),
-        new Location(1, 2),
-        new Location(2, 2),
-        new Location(2, 3),
+        new Location(1, 1, CYAN),
+        new Location(1, 2, CYAN),
+        new Location(2, 2, CYAN),
+        new Location(2, 3, CYAN),
     ]);
 }
 
@@ -66,7 +67,7 @@ function setup() {
 
     makeNewGhost();
 
-    gameState.sprites.position.set(50, 75);
+    gameState.sprites.position.set(50, 90);
 
     app.stage.addChild(gameState.sprites);
 
@@ -116,6 +117,15 @@ function createBoardSprites(board, callback) {
         let xPos = location.x * 16;
         let yPos = location.y * 16;
         sprite.position.set(xPos, yPos);
+
+        switch (location.state) {
+            case CYAN:
+                sprite.tint = 0x00FFFF;
+                break;
+            case BORDER:
+                sprite.tint = 0x444444;
+                break;
+        }
 
         callback(sprite);
     }

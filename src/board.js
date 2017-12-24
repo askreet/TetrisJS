@@ -10,18 +10,17 @@ function buildArray(x, y) {
     return theArray;
 }
 
-const EMPTY = 0;
-const NOT_EMPTY = 1;
-// EMPTY = 0;
-// CYAN = 1;
-// YELLOW = 2;
-// PURPLE = 3;
-// GREEN = 4;
-// RED = 5;
-// BLUE = 6;
-// ORANGE = 7;
+export const EMPTY = 0;
+export const CYAN = 1;
+export const YELLOW = 2;
+export const PURPLE = 3;
+export const GREEN = 4;
+export const RED = 5;
+export const BLUE = 6;
+export const ORANGE = 7;
+export const BORDER = 8;
 
-class Board {
+export class Board {
     constructor() {
         this.width = 10;
         this.height = 22;
@@ -84,9 +83,7 @@ class Board {
 
     absorbGhost(ghost) {
         for (let location of ghost.locations) {
-            this.setStateAtLocation(location, NOT_EMPTY);
+            this.setStateAtLocation(location, CYAN);
         }
     }
 }
-
-export default Board;
