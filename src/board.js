@@ -51,7 +51,7 @@ class Board {
             spaces.push(new Location(this.width + 1, y));
         }
 
-        for (let x=1; x < this.width; x++) {
+        for (let x=0; x < this.width + 2; x++) {
             // floor
             spaces.push(new Location(x, this.height + 1));
         }
