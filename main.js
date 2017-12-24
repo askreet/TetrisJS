@@ -64,8 +64,6 @@ function setup() {
 
     setupListeners();
 
-    requestAnimationFrame();
-
     let board = new Board();
     let boardSprites = createBoardSprites(board);
 
@@ -73,19 +71,16 @@ function setup() {
         app.stage.addChild(sprite);
     }
 
-    console.log("Setup complete!");
+    app.ticker.add(delta => update(delta));
 
-    gameLoop();
+    console.log("Setup complete!");
 }
 
-function gameLoop() {
+function update(delta) {
     "use strict";
 
-    requestAnimationFrame(gameLoop);
-
     if (state.keys['q']) {
-        app.destroy();
+        alert("q was pressed");
     }
-
-    app.renderer.render();
 }
+
