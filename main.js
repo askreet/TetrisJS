@@ -62,14 +62,14 @@ function update(delta) {
 
     let startUpdate = performance.now();
 
-    if (performance.now() - gameState.lastDrop > gameState.dropTime) {
-        gameState.ghost.attemptDown(gameState.board);
-    }
+    // if (performance.now() - gameState.lastDrop > gameState.dropTime) {
+        // gameState.ghost.attemptDown(gameState.board);
+    // }
 
-    gameState.sprites.removeChildren();
+    // gameState.sprites.removeChildren();
 
     // addBoardSprites(board, gameState.sprites);
-    addGhostSprites(gameState.ghost, gameState.sprites);
+    // addGhostSprites(gameState.ghost, gameState.sprites);
 
     let t = (performance.now() - startUpdate) / 1000;
 
