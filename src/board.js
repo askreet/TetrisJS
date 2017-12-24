@@ -37,6 +37,8 @@ class Board {
             return false;
         }
 
+        console.log("Passed edge detection, comparing to block state: " + this.stateAtLocation(location));
+
         return this.stateAtLocation(location) === EMPTY;
     }
 
