@@ -11,7 +11,7 @@ let app = new Application({ width: 800, height: 600 });
 let keyListener = new window.keypress.Listener();
 let gameState = {
     lastDrop: performance.now(),
-    dropTime: 1000000, // microseconds?
+    dropTime: 1000, // microseconds?
     board: new Board(),
     ghost: new Ghost(),
     sprites: new PIXI.Container(),
@@ -62,10 +62,11 @@ function setup() {
 function update(delta) {
     "use strict";
 
-    // let startUpdate = performance.now();
+    let startUpdate = performance.now();
 
-    if (performance.now() - gameState.lastDrop > gameState.dropTime) {
+    if (startUpdate - gameState.lastDrop > gameState.dropTime) {
         gameState.ghost.attemptDown(gameState.board);
+        gameState.lastDrop = startUpdate;
     }
 
     gameState.sprites.removeChildren();
