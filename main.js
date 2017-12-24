@@ -1,5 +1,6 @@
 import Board from './src/board.js';
 import Ghost from './src/ghost.js';
+import Location from './src/location.js';
 
 let Application = PIXI.Application,
     loader = PIXI.loader,
