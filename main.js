@@ -66,7 +66,7 @@ function moveGhostDown() {
 
     if (gameState.ghost.moveDownShouldAbsorb(gameState.board)) {
         gameState.board.absorbGhost(gameState.ghost);
-        makeNewGhost();
+        gameState.ghost = makeNewGhost();
     } else {
         gameState.ghost.down();
     }
@@ -85,7 +85,7 @@ function setup() {
         if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
     });
 
-    makeNewGhost();
+    gameState.ghost = makeNewGhost();
 
     gameState.sprites.position.set(50, 90);
 

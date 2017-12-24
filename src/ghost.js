@@ -1,7 +1,7 @@
 import {BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./board.js";
 import Location from "./location.js";
 
-class Ghost {
+export class Ghost {
     constructor(locations) {
         this.locations = locations;
     }
@@ -76,5 +76,3 @@ class Ghost {
     }
 
 }
-
-export default Ghost;
