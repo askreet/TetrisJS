@@ -31,7 +31,7 @@ class Board {
             return false;
         }
 
-        if (location.x > this.width || location.y > this.width) {
+        if (location.x > this.width || location.y > this.height) {
             return false;
         }
 
