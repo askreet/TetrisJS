@@ -1,4 +1,4 @@
-import { Board, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/board.js";
+import { Board, BORDER, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/board.js";
 import { Ghost } from './src/ghost.js';
 
 let loader = PIXI.loader,
