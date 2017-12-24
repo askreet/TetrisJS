@@ -23,7 +23,7 @@ export class FallingPiece {
     }
 
     moveDownShouldAbsorb(playfield) {
-        return this.isCellBoxChangeValid(playfield, this._cellBox.translate(0, 1));
+        return !this.isCellBoxChangeValid(playfield, this._cellBox.translate(0, 1));
     }
 
     changeCellBoxIfValid(playfield, callback) {
