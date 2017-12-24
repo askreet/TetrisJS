@@ -1,3 +1,5 @@
+import Location from './location.js';
+
 function buildArray(x, y) {
     let theArray = new Array(y);
 
