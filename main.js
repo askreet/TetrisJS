@@ -63,11 +63,8 @@ function update(delta) {
     let startUpdate = performance.now();
 
     if (performance.now() - gameState.lastDrop > gameState.dropTime) {
-        drop();
+        gameState.ghost.attemptDown(gameState.board);
     }
-
-    gameState.ghost.update();
-    // gameState.board.update();
 
     gameState.sprites.removeChildren();
 
@@ -76,7 +73,7 @@ function update(delta) {
 
     let t = (performance.now() - startUpdate) / 1000;
 
-    console.log("Completed game update in " + t + "ms");
+    console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
 function addGhostSprites(ghost, sprites) {
@@ -87,25 +84,4 @@ function addGhostSprites(ghost, sprites) {
 
         sprites.addChild(sprite);
     }
-}
-
-function createBoardSprites(board) {
-    let boardSprites = [];
-
-    for (let [x, y] of board.positions()) {
-        let sprite = new Sprite(resources.block16.texture);
-
-        sprite.position.set(x * 16, y * 16);
-
-        boardSprites.push(sprite);
-    }
-
-    return boardSprites;
-}
-
-
-function drop() {
-    "use strict";
-
-    console.log("Drop!");
 }
