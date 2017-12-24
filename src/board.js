@@ -44,7 +44,7 @@ export class Board {
 
         for (let y=0; y < this.height + 1; y++) {
             // left wall
-            spaces.push(new Location(0, y));
+            spaces.push(new Location(0, y, BORDER));
 
             // right wall
             spaces.push(new Location(this.width + 1, y, BORDER));

@@ -87,45 +87,32 @@ function update(delta) {
 
     gameState.sprites.removeChildren();
 
-    createBoardSprites(gameState.board, sprite => gameState.sprites.addChild(sprite));
-    createGhostSprites(gameState.ghost, sprite => gameState.sprites.addChild(sprite));
+    gameState.board.locations.map(loc => createLocationSprite(loc))
+        .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    // let t = (performance.now() - startUpdate) / 1000;
+    gameState.ghost.locations.map(loc => createLocationSprite(loc))
+        .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
+    let t = (performance.now() - startUpdate) / 1000;
+
+    console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
-function createGhostSprites(ghost, callback) {
-    for (let location of ghost.locations) {
-        let sprite = new Sprite(resources.block16.texture);
+function createLocationSprite(location) {
+    let sprite = new Sprite(resources.block16.texture);
 
-        let xPos = location.x * 16;
-        let yPos = location.y * 16;
-        sprite.position.set(xPos, yPos);
+    let xPos = location.x * 16;
+    let yPos = location.y * 16;
+    sprite.position.set(xPos, yPos);
 
-        callback(sprite);
+    switch (location.state) {
+        case CYAN:
+            sprite.tint = 0x00FFFF;
+            break;
+        case BORDER:
+            sprite.tint = 0x444444;
+            break;
     }
-}
 
-function createBoardSprites(board, callback) {
-    "use strict";
-
-    for (let location of board.occupiedSpaces()) {
-        let sprite = new Sprite(resources.block16.texture);
-
-        let xPos = location.x * 16;
-        let yPos = location.y * 16;
-        sprite.position.set(xPos, yPos);
-
-        switch (location.state) {
-            case CYAN:
-                sprite.tint = 0x00FFFF;
-                break;
-            case BORDER:
-                sprite.tint = 0x444444;
-                break;
-        }
-
-        callback(sprite);
-    }
+    return sprite;
 }
