@@ -1,7 +1,7 @@
-const maxX = 9;
-const maxY = 21;
-const minX = 0;
-const minY = 0;
+const maxX = 10;
+const maxY = 22;
+const minX = 1;
+const minY = 1;
 
 function clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
