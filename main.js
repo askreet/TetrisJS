@@ -76,7 +76,7 @@ function update(delta) {
     console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
-function *createGhostSprites(ghost) {
+function createGhostSprites(ghost, callback) {
     for (let location of ghost.locations) {
         let sprite = new Sprite(resources.block16.texture);
 
@@ -85,6 +85,6 @@ function *createGhostSprites(ghost) {
         console.log("Adding sprite to x=" + xPos + " y=" + yPos);
         sprite.position.set(xPos, yPos);
 
-        yield sprite;
+        callback(sprite);
     }
 }
