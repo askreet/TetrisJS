@@ -62,7 +62,7 @@ function setup() {
 function update(delta) {
     "use strict";
 
-    let startUpdate = performance.now();
+    // let startUpdate = performance.now();
 
     if (performance.now() - gameState.lastDrop > gameState.dropTime) {
         gameState.ghost.attemptDown(gameState.board);
@@ -73,7 +73,7 @@ function update(delta) {
     createBoardSprites(gameState.board, sprite => gameState.sprites.addChild(sprite));
     createGhostSprites(gameState.ghost, sprite => gameState.sprites.addChild(sprite));
 
-    let t = (performance.now() - startUpdate) / 1000;
+    // let t = (performance.now() - startUpdate) / 1000;
 
     // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
@@ -90,7 +90,7 @@ function createGhostSprites(ghost, callback) {
     }
 }
 
-function createBoardSprites(ghost, callback) {
+function createBoardSprites(board, callback) {
     "use strict";
 
     for (let location of board.occupiedSpaces()) {
