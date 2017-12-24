@@ -28,6 +28,10 @@ class Location {
     down() {
         return new Location(this.x, this.y + 1);
     }
+
+    toString() {
+        return "Location(x=" + this.x + ", y=" + this.y + ")";
+    }
 }
 
 export default Location;

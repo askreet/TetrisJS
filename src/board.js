@@ -27,6 +27,8 @@ class Board {
     }
 
     isValidEmptyLocation(location) {
+        console.log("Checking validity of location " + location);
+
         if (location.x < 1 || location.y < 1) {
             return false;
         }

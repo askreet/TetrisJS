@@ -75,7 +75,7 @@ function update(delta) {
 
     let t = (performance.now() - startUpdate) / 1000;
 
-    console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
+    // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
 function createGhostSprites(ghost, callback) {
@@ -84,7 +84,7 @@ function createGhostSprites(ghost, callback) {
 
         let xPos = location.x * 16;
         let yPos = location.y * 16;
-        console.log("Adding sprite to x=" + xPos + " y=" + yPos);
+        // console.log("Adding sprite to x=" + xPos + " y=" + yPos);
         sprite.position.set(xPos, yPos);
 
         callback(sprite);
