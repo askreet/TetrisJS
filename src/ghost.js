@@ -1,4 +1,5 @@
 import {BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./board.js";
+import Location from "./location.js";
 
 class Ghost {
     constructor(locations) {
