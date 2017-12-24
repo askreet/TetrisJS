@@ -70,6 +70,7 @@ class Board {
     }
 
     setStateAtLocation(location, state) {
+        console.log("Setting state " + state + " at " + location);
         this.board[location.y - 1][location.x - 1] = state;
     }
 

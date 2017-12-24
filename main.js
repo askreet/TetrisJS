@@ -66,6 +66,8 @@ function setup() {
 
     makeNewGhost();
 
+    gameState.sprites.position.set(50, 150);
+
     app.stage.addChild(gameState.sprites);
 
     app.ticker.add(delta => update(delta));
