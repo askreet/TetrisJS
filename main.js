@@ -69,14 +69,14 @@ function update(delta) {
     gameState.sprites.removeChildren();
 
     // addBoardSprites(board, gameState.sprites);
-    addGhostSprites(gameState.ghost, gameState.sprites);
+    createGhostSprites(ghost, sprite => gameState.sprites.addChild(sprite));
 
     let t = (performance.now() - startUpdate) / 1000;
 
     console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
-function addGhostSprites(ghost, sprites) {
+function *createGhostSprites(ghost) {
     for (let location of ghost.locations) {
         let sprite = new Sprite(resources.block16.texture);
 
@@ -85,6 +85,6 @@ function addGhostSprites(ghost, sprites) {
         console.log("Adding sprite to x=" + xPos + " y=" + yPos);
         sprite.position.set(xPos, yPos);
 
-        sprites.addChild(sprite);
+        yield sprite;
     }
 }
