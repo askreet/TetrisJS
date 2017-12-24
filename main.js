@@ -69,7 +69,7 @@ function update(delta) {
     // gameState.sprites.removeChildren();
 
     // addBoardSprites(board, gameState.sprites);
-    // addGhostSprites(gameState.ghost, gameState.sprites);
+    addGhostSprites(gameState.ghost, gameState.sprites);
 
     let t = (performance.now() - startUpdate) / 1000;
 
