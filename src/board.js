@@ -39,7 +39,7 @@ class Board {
     }
 
     occupiedSpaces() {
-        spaces = [];
+        let spaces = [];
 
         for (let y=0; y < this.height + 1; y++) {
             // left wall
