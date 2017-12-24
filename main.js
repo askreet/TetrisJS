@@ -11,7 +11,7 @@ let gameState = {
     lastDrop: performance.now(),
     dropTime: 1000, // "ticks" -- see Performance
     board: new Playfield(),
-    ghost: new FallingPiece([]),
+    fallingPiece: new FallingPiece([]),
     sprites: new PIXI.Container(),
 };
 
@@ -61,13 +61,13 @@ function makeNewFallingPiece() {
 }
 
 function moveFallingPieceDown() {
-    if (!gameState.ghost) return;
+    if (!gameState.fallingPiece) return;
 
-    if (gameState.ghost.moveDownShouldAbsorb(gameState.board)) {
-        gameState.board.absorbFallingPiece(gameState.ghost);
-        gameState.ghost = makeNewFallingPiece();
+    if (gameState.fallingPiece.moveDownShouldAbsorb(gameState.board)) {
+        gameState.board.absorbFallingPiece(gameState.fallingPiece);
+        gameState.fallingPiece = makeNewFallingPiece();
     } else {
-        gameState.ghost.down();
+        gameState.fallingPiece.down();
     }
 }
 
@@ -75,16 +75,16 @@ function setup() {
     "use strict";
 
     onKeyDown('a', function() {
-        if (gameState.ghost) gameState.ghost.attemptLeft(gameState.board);
+        if (gameState.fallingPiece) gameState.fallingPiece.attemptLeft(gameState.board);
     });
     onKeyDown('s', function() {
         moveFallingPieceDown();
     });
     onKeyDown('d', function() {
-        if (gameState.ghost) gameState.ghost.attemptRight(gameState.board);
+        if (gameState.fallingPiece) gameState.fallingPiece.attemptRight(gameState.board);
     });
 
-    gameState.ghost = makeNewFallingPiece();
+    gameState.fallingPiece = makeNewFallingPiece();
 
     gameState.sprites.position.set(50, 90);
 
@@ -109,7 +109,7 @@ function update(delta) {
     gameState.board.occupiedCells().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    gameState.ghost._cells.map(loc => createLocationSprite(loc))
+    gameState.fallingPiece.getCells().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
     // let t = (performance.now() - startUpdate) / 1000;
