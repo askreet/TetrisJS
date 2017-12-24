@@ -133,8 +133,6 @@ function tintForState(state) {
     "use strict";
 
     switch (state) {
-        case EMPTY:
-            return 0x000000;
         case CYAN:
             return 0x00FFFF;
         case YELLOW:
