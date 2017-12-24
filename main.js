@@ -87,7 +87,7 @@ function update(delta) {
 
     gameState.sprites.removeChildren();
 
-    gameState.board.locations.map(loc => createLocationSprite(loc))
+    gameState.board.occupiedSpaces().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
     gameState.ghost.locations.map(loc => createLocationSprite(loc))
