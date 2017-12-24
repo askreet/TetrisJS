@@ -52,6 +52,8 @@ function setup() {
         new Location(2, 3),
     ]);
 
+    app.stage.addChild(gameState.sprites);
+
     app.ticker.add(delta => update(delta));
 
     console.log("Setup complete!");
