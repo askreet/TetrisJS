@@ -27,8 +27,6 @@ class Board {
     }
 
     isValidEmptyLocation(location) {
-        console.log("Checking validity of location " + location);
-
         if (location.x < 1 || location.y < 1) {
             return false;
         }
@@ -37,13 +35,26 @@ class Board {
             return false;
         }
 
-        console.log("Passed edge detection, comparing to block state: " + this.stateAtLocation(location));
-
         return this.stateAtLocation(location) === EMPTY;
     }
 
-    getNonEmptyLocations() {
+    occupiedSpaces() {
+        spaces = [];
 
+        for (let y=0; y < this.height + 1; y++) {
+            // left wall
+            spaces.push(new Location(0, y));
+
+            // right wall
+            spaces.push(new Location(this.width + 1, y));
+        }
+
+        for (let x=1; x < this.width; x++) {
+            // floor
+            spaces.push(new Location(x, this.height + 1));
+        }
+
+        return spaces;
     }
 
     stateAtLocation(location) {

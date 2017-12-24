@@ -70,7 +70,7 @@ function update(delta) {
 
     gameState.sprites.removeChildren();
 
-    // addBoardSprites(board, gameState.sprites);
+    createBoardSprites(gameState.board, sprite => gameState.sprites.addChild(sprite));
     createGhostSprites(gameState.ghost, sprite => gameState.sprites.addChild(sprite));
 
     let t = (performance.now() - startUpdate) / 1000;
@@ -84,7 +84,20 @@ function createGhostSprites(ghost, callback) {
 
         let xPos = location.x * 16;
         let yPos = location.y * 16;
-        // console.log("Adding sprite to x=" + xPos + " y=" + yPos);
+        sprite.position.set(xPos, yPos);
+
+        callback(sprite);
+    }
+}
+
+function createBoardSprites(ghost, callback) {
+    "use strict";
+
+    for (let location of board.occupiedSpaces()) {
+        let sprite = new Sprite(resources.block16.texture);
+
+        let xPos = location.x * 16;
+        let yPos = location.y * 16;
         sprite.position.set(xPos, yPos);
 
         callback(sprite);
