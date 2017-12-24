@@ -42,5 +42,22 @@ describe('3x3 CellBox', function () {
             [3, 3],
         ]);
     });
+
+    it('should translate', function() {
+        let cellbox1 = newSCellBox3();
+
+        console.log(cellbox1.getCells());
+
+        let translatedCellbox = cellbox1.translate(1, 0);
+
+        console.log(translatedCellbox.getCells());
+
+        expect(getCoords(translatedCellbox)).to.have.deep.members([
+            [2, 2],
+            [3, 1],
+            [3, 2],
+            [4, 1],
+        ]);
+    });
 });
 

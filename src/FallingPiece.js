@@ -4,58 +4,45 @@ import {CellBox3} from "./CellBox3.js";
 export class FallingPiece {
     constructor(cellBox) {
         this._cellBox = cellBox;
-        this._offsetX = 0;
-        this._offsetY = 0;
     }
 
     attemptRight(playfield) {
-        let proposedNewCells = this.getCells().map(loc => loc.right());
-
-        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
-            this._offsetX += 1;
-            return true;
-        }
-
-        return false;
+        return this.changeCellBoxIfValid(playfield, c => c.translate(1, 0));
     }
 
     attemptLeft(playfield) {
-        let proposedNewCells = this.getCells().map(loc => loc.left());
-
-        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
-            this._offsetX -= 1;
-            return true;
-        }
-
-        return false;
+        return this.changeCellBoxIfValid(playfield, c => c.translate(-1, 0));
     }
 
     attemptRotate(playfield) {
-        // TODO: This is a mess.
-        let proposedNewCells = this._cellBox.rotate().getCells().map(cell => cell.translate(this._offsetX, this._offsetY));
+        return this.changeCellBoxIfValid(playfield, c => c.rotate());
+    }
 
-        if (proposedNewCells.every(loc => playfield.isValidEmptyCell(loc))) {
-            this._cellBox = this._cellBox.rotate();
+    down() {
+        this._cellBox = this._cellBox.translate(0, 1);
+    }
+
+    moveDownShouldAbsorb(playfield) {
+        return this.isCellBoxChangeValid(playfield, this._cellBox.translate(0, 1));
+    }
+
+    changeCellBoxIfValid(playfield, callback) {
+        let newCellBox = callback(this._cellBox);
+
+        if (this.isCellBoxChangeValid(playfield, newCellBox)) {
+            this._cellBox = newCellBox;
             return true;
         }
 
         return false;
     }
 
-    down() {
-        this._offsetY += 1;
-    }
-
-    moveDownShouldAbsorb(playfield) {
-        let proposedNewCell = this.getCells().map(loc => loc.down());
-
-        return !proposedNewCell.every(loc => playfield.isValidEmptyCell(loc));
+    isCellBoxChangeValid(playfield, newCellBox) {
+        return playfield.allCellsEmpty(newCellBox.getCells());
     }
 
     getCells() {
-        return this._cellBox.getCells().map(
-            cell => cell.translate(this._offsetX, this._offsetY)
-        );
+        return this._cellBox.getCells();
     }
 
     static newIBlock() {

@@ -27,6 +27,10 @@ export class Playfield {
         this.board = buildArray(this.width, this.height);
     }
 
+    allCellsEmpty(cells) {
+        return cells.every(cell => this.isValidEmptyCell(cell));
+    }
+
     isValidEmptyCell(location) {
         if (location.x < 1 || location.y < 1) {
             return false;

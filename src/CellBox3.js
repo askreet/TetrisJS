@@ -1,13 +1,15 @@
 import {Cell} from "./Cell.js";
 
 export class CellBox3 {
-    constructor(cellMap, state) {
+    constructor(cellMap, state, offsetX = 0, offsetY = 0) {
         if (cellMap.length !== 9) {
             throw 'CellBox3 map must be 9 cells.'
         }
 
         this._cellMap = cellMap;
         this._state = state;
+        this._offsetX = offsetX;
+        this._offsetY = offsetY;
     }
 
     getCells() {
@@ -16,7 +18,7 @@ export class CellBox3 {
         for (let x = 1; x <= 3; x++) {
             for (let y = 1; y <= 3; y++) {
                 if (this._cellMap[((y - 1) * 3) + (x - 1)] === 1) {
-                    cells.push(new Cell(x, y, this._state));
+                    cells.push(new Cell(x + this._offsetX, y + this._offsetY, this._state));
                 }
             }
         }
@@ -41,7 +43,18 @@ export class CellBox3 {
                 c[7], c[4], c[1],
                 c[8], c[5], c[2],
             ],
-            this._state
+            this._state,
+            this._offsetX,
+            this._offsetY
+        );
+    }
+
+    translate(x, y) {
+        return new CellBox3(
+            this._cellMap,
+            this._state,
+            this._offsetX + x,
+            this._offsetY + y
         );
     }
 }
