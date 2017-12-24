@@ -9,24 +9,24 @@ function clamp(val, min, max) {
 
 class Location {
     constructor(x, y) {
-        this._x = clamp(x, minX, maxX);
-        this._y = clamp(y, minY, maxY);
+        this.x = clamp(x, minX, maxX);
+        this.y = clamp(y, minY, maxY);
     }
 
     left() {
-        return new Location(this._x - 1, this._y);
+        return new Location(this.x - 1, this.y);
     }
 
     right() {
-        return new Location(this._x + 1, this._y);
+        return new Location(this.x + 1, this.y);
     }
 
     up() {
-        return new Location(this._x, this._y - 1);
+        return new Location(this.x, this.y - 1);
     }
 
     down() {
-        return new Location(this._x, this._y + 1);
+        return new Location(this.x, this.y + 1);
     }
 }
 
