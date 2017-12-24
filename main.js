@@ -74,7 +74,7 @@ function update(delta) {
     let startUpdate = performance.now();
 
     if (startUpdate - gameState.lastDrop > gameState.dropTime) {
-        gameState.ghost.down(gameState.board);
+        moveGhostDown();
         gameState.lastDrop = startUpdate;
     }
 
