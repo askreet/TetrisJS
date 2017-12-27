@@ -66,6 +66,9 @@ function moveFallingPieceDown() {
     if (gameState.fallingPiece.moveDownShouldAbsorb(gameState.board)) {
         gameState.board.absorbFallingPiece(gameState.fallingPiece);
         gameState.fallingPiece = makeNewFallingPiece();
+
+        console.log("Made new falling piece.");
+        console.log(gameState);
     } else {
         gameState.fallingPiece.down();
     }
