@@ -94,8 +94,6 @@ function setup() {
     app.stage.addChild(gameState.sprites);
 
     app.ticker.add(delta => update(delta));
-
-    console.log("Setup complete!");
 }
 
 function update(delta) {

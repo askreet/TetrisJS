@@ -20,7 +20,7 @@ function fallingPieceForGrid(width, height, states) {
     "use strict";
 
     return {
-        getCells: function() {
+        getCells: function () {
             return cellsForGrid(width, height, states).filter(cell => cell.state !== 0);
         }
     }
@@ -40,22 +40,40 @@ function newPlayfieldWithState(width, height, states) {
 
 function playfieldToGrid(playfield) {
     "use strict";
-    let grid = [];
 
-    for (let row of playfield.board) {
-        for (let col of row) {
-            grid.push(col);
-        }
-    }
-
-    return grid;
+    // TODO: broken encapsulation
+    return Array.from(playfield._grid._storage);
 }
 
-describe('Playfield', function() {
+describe('Playfield', () => {
     "use strict";
 
-    describe('absorbFallingPiece', function() {
-        it('should add cells from falling piece to state', function() {
+    describe('basic properties', () => {
+        it('should work', () => {
+            let playfield = newPlayfieldWithState(1, 1, [1]);
+
+            expect(playfield.width).to.equal(1);
+            expect(playfield.height).to.equal(1);
+        });
+    });
+
+    describe('setStateAt', () => {
+        it('should update the cell state', () => {
+            let playfield = newPlayfieldWithState(3, 3,
+                [
+                    0, 0, 0,
+                    1, 1, 1,
+                    0, 0, 0,
+                ]);
+
+            expect(playfield.cellAt(2, 2).state).to.equal(1);
+            playfield.setStateAt(2, 2, 2);
+            expect(playfield.cellAt(2, 2).state).to.equal(2);
+        });
+    });
+
+    describe('absorbFallingPiece', () => {
+        it('should add cells from falling piece to state', () => {
             let playfield = newPlayfieldWithState(3, 3, [
                 0, 0, 0,
                 0, 0, 0,
@@ -77,7 +95,7 @@ describe('Playfield', function() {
             ]);
         });
 
-        it('should clear rows immediately after absorbing a falling piece', function() {
+        it('should clear rows immediately after absorbing a falling piece', () => {
             let playfield = newPlayfieldWithState(3, 3, [
                 0, 0, 0,
                 0, 0, 0,
@@ -99,7 +117,7 @@ describe('Playfield', function() {
             ]);
         });
 
-        it('should handle multiple row clears', function() {
+        it('should handle multiple row clears', () => {
             let playfield = newPlayfieldWithState(5, 5, [
                 0, 0, 1, 1, 1,
                 0, 1, 1, 1, 1,
@@ -108,7 +126,7 @@ describe('Playfield', function() {
                 0, 1, 1, 1, 1,
             ]);
 
-            let fallingPiece = fallingPieceForGrid(5,5 ,[
+            let fallingPiece = fallingPieceForGrid(5, 5, [
                 0, 0, 0, 0, 0,
                 1, 0, 0, 0, 0,
                 1, 0, 0, 0, 0,

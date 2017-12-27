@@ -14,8 +14,6 @@ describe('FallingPiece', function() {
         let playfield = new Playfield();
         let fallingPiece = FallingPiece.newSBlock();
 
-        console.log(fallingPiece.getCells());
-
         expect(getCoords(fallingPiece)).to.have.deep.members([
             [2, 1],
             [3, 1],
@@ -24,8 +22,6 @@ describe('FallingPiece', function() {
         ]);
 
         fallingPiece.attemptRight(playfield);
-
-        console.log(fallingPiece.getCells());
 
         expect(getCoords(fallingPiece)).to.have.deep.members([
             [3, 1],

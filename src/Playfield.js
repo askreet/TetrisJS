@@ -1,14 +1,5 @@
 import {Cell} from './Cell.js';
-
-function buildArray(x, y) {
-    let theArray = new Array(y);
-
-    for (let i = 0; i < y; i++) {
-        theArray[i] = new Uint8Array(x);
-    }
-
-    return theArray;
-}
+import {Grid} from "./Grid.js";
 
 export const EMPTY = 0;
 export const CYAN = 1;
@@ -29,25 +20,26 @@ function range(start, count) {
 
 export class Playfield {
     constructor(width = 10, height = 22) {
-        this.width = width;
-        this.height = height;
-        this.board = buildArray(this.width, this.height);
+        this._grid = new Grid(width, height);
     }
+
+    get width() { return this._grid.width }
+    get height() { return this._grid.height }
 
     allCellsEmpty(cells) {
         return cells.every(cell => this.isValidEmptyCell(cell));
     }
 
-    isValidEmptyCell(location) {
-        if (location.x < 1 || location.y < 1) {
+    isValidEmptyCell(cell) {
+        if (cell.x < 1 || cell.y < 1) {
             return false;
         }
 
-        if (location.x > this.width || location.y > this.height) {
+        if (cell.x > this.width || cell.y > this.height) {
             return false;
         }
 
-        return !this.anythingAt(location.x, location.y);
+        return !this.anythingAt(cell.x, cell.y);
     }
 
     occupiedCells() {
@@ -66,37 +58,29 @@ export class Playfield {
             spaces.push(new Cell(x, this.height + 1, BORDER));
         }
 
-        for (let cell of this.everyCell()) {
-            if (this.anythingAt(cell.x, cell.y)) {
-                spaces.push(cell);
+        this._grid.forEach((x, y, state) => {
+            if (state !== EMPTY) {
+                spaces.push(new Cell(x, y, state));
             }
-        }
+        });
 
         return spaces;
     }
 
     anythingAt(x, y) {
-        return this.cellAt(x, y).state !== EMPTY;
+        return this._grid.at(x, y) !== EMPTY;
     }
 
     cellAt(x, y) {
-        return new Cell(x, y, this.board[y - 1][x - 1]);
+        return new Cell(x, y, this._grid.at(x, y));
     }
 
     setStateAtCell(cell, state) {
-        this.board[cell.y - 1][cell.x - 1] = state;
+        this._grid.set(cell.x, cell.y, state);
     }
 
     setStateAt(x, y, state) {
-        this.board[y - 1][x - 1] = state;
-    }
-
-    * everyCell() {
-        for (let x = 1; x <= this.width; x++) {
-            for (let y = 1; y <= this.height; y++) {
-                yield this.cellAt(x, y);
-            }
-        }
+        this._grid.set(x, y, state);
     }
 
     absorbFallingPiece(fallingPiece) {
@@ -104,13 +88,13 @@ export class Playfield {
             this.setStateAtCell(cell, cell.state);
         }
 
-        this.checkForRowClears();
+        this._checkForRowClears();
     }
 
-    checkForRowClears() {
+    _checkForRowClears() {
         for (let y = this.height; y >= 1; y--) {
-            if (this.rowIsFull(y)) {
-                this.clearRow(y);
+            if (this._rowIsFull(y)) {
+                this._clearRow(y);
 
                 // all rows have moved down now, need to recheck this row
                 y++;
@@ -118,22 +102,21 @@ export class Playfield {
         }
     }
 
-    rowIsFull(y) {
+    _rowIsFull(y) {
         return range(1, this.width).map(x => this.cellAt(x, y)).every(cell => cell.state !== EMPTY);
     }
 
-    clearRow(y) {
+    _clearRow(y) {
         range(1, this.width).forEach(x => this.setStateAt(x, y, EMPTY));
 
-        this.gravityRow(y);
+        this._gravityRow(y);
     }
 
-    gravityRow(y) {
-        console.log("gravityRow(" + y + ")");
+    _gravityRow(y) {
         range(1, this.width).forEach(x => this.setStateAt(x, y, this.cellAt(x, y - 1).state))
 
         if (y > 2) {
-            this.gravityRow(y - 1);
+            this._gravityRow(y - 1);
         } else {
             range(1, this.width).forEach(x => this.setStateAt(x, 1, EMPTY));
         }
