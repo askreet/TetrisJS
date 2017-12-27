@@ -37,7 +37,7 @@ function randWithin(min, max) {
 }
 
 function makeNewFallingPiece() {
-    let blockType = randWithin(3, 7);
+    let blockType = randWithin(1, 7);
 
     switch (blockType) {
         case 1:
