@@ -31,3 +31,13 @@ describe('FallingPiece', function() {
         ]);
     });
 });
+
+describe('.newIBlock()', () => {
+    "use strict";
+
+    it('should build a new FallingPiece', () => {
+        let fallingPiece = FallingPiece.newIBlock();
+
+        expect(fallingPiece).to.be.an.instanceof(FallingPiece);
+    });
+});

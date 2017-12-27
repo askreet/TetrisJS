@@ -47,7 +47,7 @@ export class FallingPiece {
     }
 
     static newIBlock() {
-        let fallingPiece = new FallingPiece(
+        return new FallingPiece(
             new CellBox4(
                 [
                     0, 0, 0, 0,
@@ -58,12 +58,10 @@ export class FallingPiece {
                 CYAN
             )
         );
-        console.log(fallingPiece);
-        return fallingPiece;
     }
 
     static newOBlock() {
-        let fallingPiece = new FallingPiece(
+        return new FallingPiece(
             new CellBox4(
                 [
                     0, 0, 0, 0,
@@ -74,8 +72,6 @@ export class FallingPiece {
                 YELLOW
             )
         );
-        console.log(fallingPiece);
-        return fallingPiece;
     }
 
     static newTBlock() {
