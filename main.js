@@ -39,8 +39,6 @@ function randWithin(min, max) {
 function makeNewFallingPiece() {
     let blockType = randWithin(1, 7);
 
-    console.log("blockType=" + blockType);
-
     switch (blockType) {
         case 1:
             return FallingPiece.newIBlock();
