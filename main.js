@@ -61,33 +61,32 @@ function makeNewFallingPiece() {
 }
 
 function moveFallingPieceDown() {
-    if (!gameState.fallingPiece) return;
-
     if (gameState.fallingPiece.moveDownShouldAbsorb(gameState.board)) {
         gameState.board.absorbFallingPiece(gameState.fallingPiece);
         gameState.fallingPiece = makeNewFallingPiece();
+        return false;
     } else {
         gameState.fallingPiece.down();
+        return true;
+    }
+}
+
+function instantDrop() {
+    while (true) {
+        if (!moveFallingPieceDown()) return;
     }
 }
 
 function setup() {
     "use strict";
 
-    onKeyDown('a', function() {
-        if (gameState.fallingPiece) gameState.fallingPiece.attemptLeft(gameState.board);
-    });
-    onKeyDown('s', function() {
-        moveFallingPieceDown();
-    });
-    onKeyDown('d', function() {
-        if (gameState.fallingPiece) gameState.fallingPiece.attemptRight(gameState.board);
-    });
-    onKeyDown('w', function() {
-        if (gameState.fallingPiece) gameState.fallingPiece.attemptRotate(gameState.board);
-    })
-
     gameState.fallingPiece = makeNewFallingPiece();
+
+    onKeyDown('a', () => gameState.fallingPiece.attemptLeft(gameState.board));
+    onKeyDown('s', () => moveFallingPieceDown());
+    onKeyDown('d', () => gameState.fallingPiece.attemptRight(gameState.board));
+    onKeyDown('w', () => gameState.fallingPiece.attemptRotate(gameState.board));
+    onKeyDown('space', () => instantDrop());
 
     gameState.sprites.position.set(50, 90);
 
