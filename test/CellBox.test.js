@@ -1,5 +1,6 @@
 import {CellBox3} from '../src/CellBox3.js';
 import {CYAN} from '../src/Playfield.js';
+import {CellBox4} from "../src/CellBox4.js";
 
 function newSCellBox3() {
     "use strict";
@@ -8,6 +9,17 @@ function newSCellBox3() {
         0, 1, 1,
         1, 1, 0,
         0, 0, 0,
+    ], CYAN);
+}
+
+function newICellBox4() {
+    "use strict";
+
+    return new CellBox4([
+        0, 0, 0, 0,
+        1, 1, 1, 1,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
     ], CYAN);
 }
 
@@ -53,6 +65,36 @@ describe('3x3 CellBox', function () {
             [3, 1],
             [3, 2],
             [4, 1],
+        ]);
+    });
+});
+
+describe('4x4 CellBox', () => {
+    "use strict";
+
+    it('should rotate clockwise', function() {
+        let cellbox1 = newICellBox4();
+
+        let rotatedCellbox = cellbox1.rotate();
+
+        expect(getCoords(rotatedCellbox)).to.have.deep.members([
+            [3, 1],
+            [3, 2],
+            [3, 3],
+            [3, 4],
+        ]);
+    });
+
+    it('should translate', function() {
+        let cellbox1 = newICellBox4();
+
+        let translatedCellbox = cellbox1.translate(1, 0);
+
+        expect(getCoords(translatedCellbox)).to.have.deep.members([
+            [2, 2],
+            [3, 2],
+            [4, 2],
+            [5, 2],
         ]);
     });
 });

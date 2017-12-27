@@ -41,9 +41,9 @@ function makeNewFallingPiece() {
 
     switch (blockType) {
         case 1:
-            // return FallingPiece.newIBlock();
+            return FallingPiece.newIBlock();
         case 2:
-            // return FallingPiece.newOBlock();
+            return FallingPiece.newOBlock();
         case 3:
             return FallingPiece.newTBlock();
         case 4:

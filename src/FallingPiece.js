@@ -1,5 +1,6 @@
 import {BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./Playfield.js";
 import {CellBox3} from "./CellBox3.js";
+import {CellBox4} from "./CellBox4.js";
 
 export class FallingPiece {
     constructor(cellBox) {
@@ -46,11 +47,31 @@ export class FallingPiece {
     }
 
     static newIBlock() {
-        // return this.newGhost(1, 2, 2, 2, 3, 2, 4, 2, CYAN);
+        return new FallingPiece(
+            new CellBox4(
+                [
+                    0, 0, 0, 0,
+                    1, 1, 1, 1,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                ],
+                CYAN
+            )
+        );
     }
 
     static newOBlock() {
-        // return this.newGhost(2, 1, 3, 1, 2, 2, 3, 2, YELLOW);
+        return new FallingPiece(
+            new CellBox4(
+                [
+                    0, 0, 0, 0,
+                    0, 1, 1, 0,
+                    0, 1, 1, 0,
+                    0, 0, 0, 0,
+                ],
+                YELLOW
+            )
+        );
     }
 
     static newTBlock() {
