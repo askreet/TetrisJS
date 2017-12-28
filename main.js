@@ -90,6 +90,10 @@ function update(delta) {
     gameState.fallingPiece.getCells().map(loc => createLocationSprite(loc))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
+    gameState.pieceBag.peekNextPiece().getCells().map(cell => cell.translate(15, 0))
+        .map(cell => createLocationSprite(cell))
+        .forEach(sprite => gameState.sprites.addChild(sprite));
+
     // let t = (performance.now() - startUpdate) / 1000;
 
     // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
