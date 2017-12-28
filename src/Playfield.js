@@ -88,18 +88,23 @@ export class Playfield {
             this.setStateAtCell(cell, cell.state);
         }
 
-        this._checkForRowClears();
+        return this._checkForRowClears();
     }
 
     _checkForRowClears() {
+        let numberOfClearedRows = 0;
+
         for (let y = this.height; y >= 1; y--) {
             if (this._rowIsFull(y)) {
                 this._clearRow(y);
 
                 // all rows have moved down now, need to recheck this row
                 y++;
+                numberOfClearedRows++;
             }
         }
+
+        return numberOfClearedRows;
     }
 
     _rowIsFull(y) {

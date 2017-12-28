@@ -55,6 +55,17 @@ function update(delta) {
         .map(cell => createCellSprite(cell))
         .forEach(sprite => sprites.addChild(sprite));
 
+    let scoreText = new PIXI.Text("Score: " + game.score,
+        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+    );
+
+    let levelText = new PIXI.Text("Level: " + game.level,
+        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+    );
+
+    sprites.add(scoreText);
+    sprites.add(levelText);
+
     // let t = (performance.now() - startUpdate) / 1000;
 
     // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
