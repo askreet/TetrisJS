@@ -13,12 +13,12 @@ A JavaScript implementation of Tetris, using pixi.js and keypress.js.
 
 ## TODO
 
-* Implement I and O Tetriminos.
+* ~~implement I and O Tetriminos.~~
 * Implement wall-kick behaviors.
 * Win conditions.
 * Lose conditions.
 * Increasing difficulty.
 * Scoring system.
-* Next Piece display.
+* ~~Next Piece display.~~
 * Music / Sound.
 * High Score tracking.
