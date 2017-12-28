@@ -1,5 +1,6 @@
 import { Playfield, BORDER, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/Playfield.js";
 import { FallingPiece } from './src/FallingPiece.js';
+import {PieceBag} from "./src/PieceBag.js";
 
 let loader = PIXI.loader,
     resources = PIXI.loader.resources,
@@ -11,6 +12,7 @@ let gameState = {
     lastDrop: performance.now(),
     dropTime: 1000, // "ticks" -- see Performance
     board: new Playfield(),
+    pieceBag: new PieceBag(),
     fallingPiece: new FallingPiece([]),
     sprites: new PIXI.Container(),
 };
@@ -36,34 +38,10 @@ function randWithin(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function makeNewFallingPiece() {
-    let blockType = randWithin(1, 7);
-
-    switch (blockType) {
-        case 1:
-            return FallingPiece.newIBlock();
-        case 2:
-            return FallingPiece.newOBlock();
-        case 3:
-            return FallingPiece.newTBlock();
-        case 4:
-            return FallingPiece.newSBlock();
-        case 5:
-            return FallingPiece.newZBlock();
-        case 6:
-            return FallingPiece.newJBlock();
-        case 7:
-            return FallingPiece.newLBlock();
-        default:
-            throw new RangeException("Unexpected value.");
-    }
-
-}
-
 function moveFallingPieceDown() {
     if (gameState.fallingPiece.moveDownShouldAbsorb(gameState.board)) {
         gameState.board.absorbFallingPiece(gameState.fallingPiece);
-        gameState.fallingPiece = makeNewFallingPiece();
+        gameState.fallingPiece = gameState.pieceBag.takePiece();
         return false;
     } else {
         gameState.fallingPiece.down();
@@ -80,7 +58,7 @@ function instantDrop() {
 function setup() {
     "use strict";
 
-    gameState.fallingPiece = makeNewFallingPiece();
+    gameState.fallingPiece = gameState.pieceBag.takePiece();
 
     onKeyDown('a', () => gameState.fallingPiece.attemptLeft(gameState.board));
     onKeyDown('s', () => moveFallingPieceDown());
@@ -150,5 +128,4 @@ function tintForState(state) {
         case BORDER:
             return 0x444444;
     }
-
 }
