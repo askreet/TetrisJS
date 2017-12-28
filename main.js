@@ -63,8 +63,8 @@ function update(delta) {
         {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
     );
 
-    sprites.add(scoreText);
-    sprites.add(levelText);
+    sprites.addChild(scoreText);
+    sprites.addChild(levelText);
 
     // let t = (performance.now() - startUpdate) / 1000;
 
