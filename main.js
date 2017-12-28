@@ -1,6 +1,5 @@
-import { Playfield, BORDER, BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW } from "./src/Playfield.js";
-import { FallingPiece } from './src/FallingPiece.js';
-import {PieceBag} from "./src/PieceBag.js";
+import {BLUE, BORDER, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./src/Playfield.js";
+import {Game} from "./src/Game.js";
 
 let loader = PIXI.loader,
     resources = PIXI.loader.resources,
@@ -8,14 +7,8 @@ let loader = PIXI.loader,
 
 let app = new PIXI.Application({ width: 800, height: 600 });
 let keyListener = new window.keypress.Listener();
-let gameState = {
-    lastDrop: performance.now(),
-    dropTime: 1000, // "ticks" -- see Performance
-    board: new Playfield(),
-    pieceBag: new PieceBag(),
-    fallingPiece: new FallingPiece([]),
-    sprites: new PIXI.Container(),
-};
+let game = new Game();
+let sprites = new PIXI.Container();
 
 document.body.appendChild(app.view);
 
@@ -32,39 +25,12 @@ function onKeyDown(key, callback) {
     });
 }
 
-function randWithin(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function moveFallingPieceDown() {
-    if (gameState.fallingPiece.moveDownShouldAbsorb(gameState.board)) {
-        gameState.board.absorbFallingPiece(gameState.fallingPiece);
-        gameState.fallingPiece = gameState.pieceBag.takePiece();
-        return false;
-    } else {
-        gameState.fallingPiece.down();
-        return true;
-    }
-}
-
-function instantDrop() {
-    while (true) {
-        if (!moveFallingPieceDown()) return;
-    }
-}
-
 function setup() {
-    "use strict";
-
-    gameState.fallingPiece = gameState.pieceBag.takePiece();
-
-    onKeyDown('a', () => gameState.fallingPiece.attemptLeft(gameState.board));
-    onKeyDown('s', () => moveFallingPieceDown());
-    onKeyDown('d', () => gameState.fallingPiece.attemptRight(gameState.board));
-    onKeyDown('w', () => gameState.fallingPiece.attemptRotate(gameState.board));
-    onKeyDown('space', () => instantDrop());
+    onKeyDown('a', () => game.left());
+    onKeyDown('s', () => game.down());
+    onKeyDown('d', () => game.right());
+    onKeyDown('w', () => game.rotate());
+    onKeyDown('space', () => game.instantDrop());
 
     gameState.sprites.position.set(50, 90);
 
@@ -75,23 +41,18 @@ function setup() {
 
 function update(delta) {
     "use strict";
-    let startUpdate = performance.now();
+    game.update();
 
-    if (startUpdate - gameState.lastDrop > gameState.dropTime) {
-        moveFallingPieceDown();
-        gameState.lastDrop = startUpdate;
-    }
+    sprites.removeChildren();
 
-    gameState.sprites.removeChildren();
-
-    gameState.board.occupiedCells().map(loc => createLocationSprite(loc))
+    game.playfieldCells.map(cell => createCellSprite(cell))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    gameState.fallingPiece.getCells().map(loc => createLocationSprite(loc))
+    game.fallingPieceCells.map(cell => createCellSprite(cell))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
-    gameState.pieceBag.peekNextPiece().getCells().map(cell => cell.translate(15, 0))
-        .map(cell => createLocationSprite(cell))
+    game.nextPieceCells.map(cell => cell.translate(15, 0))
+        .map(cell => createCellSprite(cell))
         .forEach(sprite => gameState.sprites.addChild(sprite));
 
     // let t = (performance.now() - startUpdate) / 1000;
@@ -99,14 +60,14 @@ function update(delta) {
     // console.log("Completed game update in " + t + "ms (delta=" + delta + ")");
 }
 
-function createLocationSprite(location) {
+function createCellSprite(cell) {
     let sprite = new Sprite(resources.block16.texture);
 
-    let xPos = location.x * 16;
-    let yPos = location.y * 16;
+    let xPos = cell.x * 16;
+    let yPos = cell.y * 16;
     sprite.position.set(xPos, yPos);
 
-    sprite.tint = tintForState(location.state);
+    sprite.tint = tintForState(cell.state);
 
     return sprite;
 }
