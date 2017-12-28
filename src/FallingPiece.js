@@ -1,11 +1,10 @@
-import {BLUE, CYAN, GREEN, ORANGE, PURPLE, RED, YELLOW} from "./Playfield.js";
-import {CellBox3} from "./CellBox3.js";
-import {CellBox4} from "./CellBox4.js";
-
 export class FallingPiece {
-    constructor(cellBox) {
+    constructor(tetrominoType, cellBox) {
+        this._tetrominoType = tetrominoType;
         this._cellBox = cellBox;
     }
+
+    get tetrominoType() { return this._tetrominoType; }
 
     attemptRight(playfield) {
         return this.changeCellBoxIfValid(playfield, c => c.translate(1, 0));
@@ -44,99 +43,6 @@ export class FallingPiece {
 
     getCells() {
         return this._cellBox.getCells();
-    }
-
-    static newIBlock() {
-        return new FallingPiece(
-            new CellBox4(
-                [
-                    0, 0, 0, 0,
-                    1, 1, 1, 1,
-                    0, 0, 0, 0,
-                    0, 0, 0, 0,
-                ],
-                CYAN
-            )
-        );
-    }
-
-    static newOBlock() {
-        return new FallingPiece(
-            new CellBox4(
-                [
-                    0, 0, 0, 0,
-                    0, 1, 1, 0,
-                    0, 1, 1, 0,
-                    0, 0, 0, 0,
-                ],
-                YELLOW
-            )
-        );
-    }
-
-    static newTBlock() {
-        return new FallingPiece(
-            new CellBox3(
-                [
-                    0, 1, 0,
-                    1, 1, 1,
-                    0, 0, 0,
-                ],
-                PURPLE
-            )
-        );
-    }
-
-    static newSBlock() {
-        return new FallingPiece(
-            new CellBox3(
-                [
-                    0, 1, 1,
-                    1, 1, 0,
-                    0, 0, 0,
-                ],
-                GREEN
-            )
-        );
-    }
-
-    static newZBlock() {
-        return new FallingPiece(
-            new CellBox3(
-                [
-                    1, 1, 0,
-                    0, 1, 1,
-                    0, 0, 0,
-                ],
-                RED
-            )
-        );
-    }
-
-    static newJBlock() {
-        return new FallingPiece(
-            new CellBox3(
-                [
-                    1, 0, 0,
-                    1, 1, 1,
-                    0, 0, 0,
-                ],
-                BLUE
-            )
-        );
-    }
-
-    static newLBlock() {
-        return new FallingPiece(
-            new CellBox3(
-                [
-                    0, 0, 1,
-                    1, 1, 1,
-                    0, 0, 0,
-                ],
-                ORANGE
-            )
-        );
     }
 }
 
