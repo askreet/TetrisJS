@@ -32,9 +32,9 @@ function setup() {
     onKeyDown('w', () => game.rotate());
     onKeyDown('space', () => game.instantDrop());
 
-    gameState.sprites.position.set(50, 90);
+    sprites.position.set(50, 90);
 
-    app.stage.addChild(gameState.sprites);
+    app.stage.addChild(sprites);
 
     app.ticker.add(delta => update(delta));
 }
@@ -46,14 +46,14 @@ function update(delta) {
     sprites.removeChildren();
 
     game.playfieldCells.map(cell => createCellSprite(cell))
-        .forEach(sprite => gameState.sprites.addChild(sprite));
+        .forEach(sprite => sprites.addChild(sprite));
 
     game.fallingPieceCells.map(cell => createCellSprite(cell))
-        .forEach(sprite => gameState.sprites.addChild(sprite));
+        .forEach(sprite => sprites.addChild(sprite));
 
     game.nextPieceCells.map(cell => cell.translate(15, 0))
         .map(cell => createCellSprite(cell))
-        .forEach(sprite => gameState.sprites.addChild(sprite));
+        .forEach(sprite => sprites.addChild(sprite));
 
     // let t = (performance.now() - startUpdate) / 1000;
 
