@@ -13,7 +13,8 @@ export function newIBlock() {
                 0, 0, 0, 0,
                 0, 0, 0, 0,
             ],
-            CYAN
+            CYAN,
+            3
         )
     );
 }
@@ -28,7 +29,8 @@ export function newOBlock() {
                 0, 1, 1, 0,
                 0, 0, 0, 0,
             ],
-            YELLOW
+            YELLOW,
+            3
         )
     );
 }
@@ -42,7 +44,8 @@ export function newTBlock() {
                 1, 1, 1,
                 0, 0, 0,
             ],
-            PURPLE
+            PURPLE,
+            3
         )
     );
 }
@@ -56,7 +59,8 @@ export function newSBlock() {
                 1, 1, 0,
                 0, 0, 0,
             ],
-            GREEN
+            GREEN,
+            3
         )
     );
 }
@@ -70,7 +74,8 @@ export function newZBlock() {
                 0, 1, 1,
                 0, 0, 0,
             ],
-            RED
+            RED,
+            3
         )
     );
 }
@@ -84,7 +89,8 @@ export function newJBlock() {
                 1, 1, 1,
                 0, 0, 0,
             ],
-            BLUE
+            BLUE,
+            3
         )
     );
 }
@@ -98,7 +104,8 @@ export function newLBlock() {
                 1, 1, 1,
                 0, 0, 0,
             ],
-            ORANGE
+            ORANGE,
+            3
         )
     );
 }
