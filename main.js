@@ -5,7 +5,7 @@ let loader = PIXI.loader,
     resources = PIXI.loader.resources,
     Sprite = PIXI.Sprite;
 
-let app = new PIXI.Application({ width: 800, height: 600 });
+let app = new PIXI.Application({width: 800, height: 600});
 let keyListener = new window.keypress.Listener();
 let game = new Game();
 let sprites = new PIXI.Container();
@@ -26,11 +26,11 @@ function onKeyDown(key, callback) {
 }
 
 function setup() {
-    onKeyDown('a', () => game.left());
-    onKeyDown('s', () => game.down());
-    onKeyDown('d', () => game.right());
-    onKeyDown('w', () => game.rotate());
-    onKeyDown('space', () => game.instantDrop());
+    onKeyDown("a", () => game.left());
+    onKeyDown("s", () => game.down());
+    onKeyDown("d", () => game.right());
+    onKeyDown("w", () => game.rotate());
+    onKeyDown("space", () => game.instantDrop());
 
     sprites.position.set(50, 90);
 
@@ -100,7 +100,7 @@ function tintForState(state) {
 
 function buildScoreTextSprite() {
     let scoreText = new PIXI.Text("Score: " + game.score,
-        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+        {fontFamily: "Arial", fontSize: 24, fill: 0xff1010, align: "center"}
     );
 
     scoreText.position.x = (15 * 16);
@@ -111,8 +111,9 @@ function buildScoreTextSprite() {
 
 function buildLevelTextSprite() {
     let levelText = new PIXI.Text("Level: " + game.level,
-        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+        {fontFamily: "Arial", fontSize: 24, fill: 0xff1010, align: "center"}
     );
+
     levelText.position.x = (15 * 16);
     levelText.position.y = (6 * 16);
 

@@ -4,12 +4,12 @@ import {PieceBag} from "./PieceBag.js";
 export class Game {
     constructor() {
         this._lastDrop = performance.now();
-        this._dropTimeout = 1000;
         this._playfield = new Playfield();
         this._pieceBag = new PieceBag();
         this._fallingPiece = this._pieceBag.takePiece();
         this._score = 0;
         this._level = 0;
+        this._lineClears = 0;
     }
 
     get playfieldCells() { return this._playfield.occupiedCells(); }
@@ -44,7 +44,13 @@ export class Game {
     _absorbPiece() {
         let numberOfRowsCleared = this._playfield.absorbFallingPiece(this._fallingPiece);
         this._fallingPiece = this._pieceBag.takePiece();
-        this._score += this._scoreForNRowsCleared(numberOfRowsCleared);
+        let rowsCleared = this._scoreForNRowsCleared(numberOfRowsCleared);
+        this._score += rowsCleared;
+        this._lineClears += rowsCleared;
+        if (this._lineClears >= 10) {
+            this._lineClears = 0;
+            this._level++;
+        }
     }
 
     _scoreForNRowsCleared(numberOfRowsCleared) {
@@ -52,19 +58,19 @@ export class Game {
             case 0:
                 return 0;
             case 1:
-                return 100;
+                return 100 * (this._level + 1);
             case 2:
-                return 300;
+                return 300 * (this._level + 1);
             case 3:
-                return 500;
+                return 500 * (this._level + 1);
             case 4:
-                return 800;
+                return 800 * (this._level + 1);
         }
     }
 
     update() {
         let now = performance.now();
-        if (now - this._lastDrop > this._dropTimeout) {
+        if (now - this._lastDrop > this.dropTimeout()) {
             this.down();
             this._lastDrop = now;
         }
@@ -74,5 +80,9 @@ export class Game {
         while (true) {
             if (!this.down()) return;
         }
+    }
+
+    dropTimeout() {
+        return Math.min(50, 500 - ((this._level+1) * 50));
     }
 }
