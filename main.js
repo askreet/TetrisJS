@@ -55,16 +55,8 @@ function update(delta) {
         .map(cell => createCellSprite(cell))
         .forEach(sprite => sprites.addChild(sprite));
 
-    let scoreText = new PIXI.Text("Score: " + game.score,
-        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
-    );
-
-    let levelText = new PIXI.Text("Level: " + game.level,
-        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
-    );
-
-    sprites.addChild(scoreText);
-    sprites.addChild(levelText);
+    sprites.addChild(buildScoreTextSprite());
+    sprites.addChild(buildLevelTextSprite());
 
     // let t = (performance.now() - startUpdate) / 1000;
 
@@ -104,4 +96,25 @@ function tintForState(state) {
         case BORDER:
             return 0x444444;
     }
+}
+
+function buildScoreTextSprite() {
+    let scoreText = new PIXI.Text("Score: " + game.score,
+        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+    );
+
+    scoreText.position.x = (15 * 16);
+    scoreText.position.y = (4 * 16);
+
+    return scoreText;
+}
+
+function buildLevelTextSprite() {
+    let levelText = new PIXI.Text("Level: " + game.level,
+        {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'}
+    );
+    levelText.position.x = (15 * 16);
+    levelText.position.y = (6 * 16);
+
+    return levelText;
 }
