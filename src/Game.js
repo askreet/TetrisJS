@@ -44,9 +44,8 @@ export class Game {
     _absorbPiece() {
         let numberOfRowsCleared = this._playfield.absorbFallingPiece(this._fallingPiece);
         this._fallingPiece = this._pieceBag.takePiece();
-        let rowsCleared = this._scoreForNRowsCleared(numberOfRowsCleared);
-        this._score += rowsCleared;
-        this._lineClears += rowsCleared;
+        this._score += this._scoreForNRowsCleared(numberOfRowsCleared);
+        this._lineClears += numberOfRowsCleared;
         if (this._lineClears >= 10) {
             this._lineClears = 0;
             this._level++;
@@ -83,6 +82,6 @@ export class Game {
     }
 
     dropTimeout() {
-        return Math.min(50, 500 - ((this._level+1) * 50));
+        return Math.max(50, 500 - ((this._level+1) * 50));
     }
 }
