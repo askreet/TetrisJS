@@ -9,7 +9,6 @@ let app = new PIXI.Application({width: 800, height: 600});
 let keyListener = new window.keypress.Listener();
 let game = new Game();
 let sprites = new PIXI.Container();
-let music =
 
 document.body.appendChild(app.view);
 
@@ -27,11 +26,29 @@ function onKeyDown(key, callback) {
     });
 }
 
+let musicPlaying = false;
+
+function toggleMusic() {
+    if (musicPlaying) {
+        musicPlaying = false;
+        resources.music.sound.stop();
+    } else {
+        musicPlaying = true;
+        resources.music.sound.play({ loop: true });
+    }
+}
+
 function setup() {
     onKeyDown("a", () => game.left());
     onKeyDown("s", () => game.down());
     onKeyDown("d", () => game.right());
     onKeyDown("w", () => game.rotate());
+
+    onKeyDown("left", () => game.left());
+    onKeyDown("down", () => game.down());
+    onKeyDown("right", () => game.right());
+    onKeyDown("up", () => game.rotate());
+
     onKeyDown("space", () => game.instantDrop());
 
     sprites.position.set(50, 90);
@@ -40,7 +57,7 @@ function setup() {
 
     app.ticker.add(delta => update(delta));
 
-    resources.music.sound.play();
+    toggleMusic();
 }
 
 function update(delta) {
