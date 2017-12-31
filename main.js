@@ -9,11 +9,13 @@ let app = new PIXI.Application({width: 800, height: 600});
 let keyListener = new window.keypress.Listener();
 let game = new Game();
 let sprites = new PIXI.Container();
+let music =
 
 document.body.appendChild(app.view);
 
 loader
     .add("block16", "images/block16.png")
+    .add("music", "sound/music.mp3")
     .load(setup);
 
 function onKeyDown(key, callback) {
@@ -37,6 +39,8 @@ function setup() {
     app.stage.addChild(sprites);
 
     app.ticker.add(delta => update(delta));
+
+    resources.music.play();
 }
 
 function update(delta) {

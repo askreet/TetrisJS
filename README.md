@@ -15,10 +15,9 @@ A JavaScript implementation of Tetris, using pixi.js and keypress.js.
 
 * ~~implement I and O Tetriminos.~~
 * Implement wall-kick behaviors.
-* Win conditions.
 * Lose conditions.
-* Increasing difficulty.
-* Scoring system.
+* ~~Increasing difficulty.~~
+* ~~Scoring system.~~
 * ~~Next Piece display.~~
 * Music / Sound.
 * High Score tracking.
