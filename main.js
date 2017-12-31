@@ -15,7 +15,7 @@ document.body.appendChild(app.view);
 
 loader
     .add("block16", "images/block16.png")
-    .add("music", "sound/music.mp3")
+    .add("music", "https://askreet.nyc3.digitaloceanspaces.com/music.mp3")
     .load(setup);
 
 function onKeyDown(key, callback) {
