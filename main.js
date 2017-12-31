@@ -40,7 +40,7 @@ function setup() {
 
     app.ticker.add(delta => update(delta));
 
-    resources.music.play();
+    resources.music.sound.play();
 }
 
 function update(delta) {
