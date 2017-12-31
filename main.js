@@ -28,7 +28,7 @@ function onKeyDown(key, callback) {
 
 let musicPlaying = false;
 
-function toggleMusic() {
+export function toggleMusic() {
     if (musicPlaying) {
         musicPlaying = false;
         resources.music.sound.stop();

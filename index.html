@@ -9,6 +9,11 @@
 </head>
 <body>
     <script type="module" src="main.js"></script>
-    <button onclick="toggleMusic()">Toggle Music</button>
+    <script type="module">
+        import {toggleMusic} from './main.js';
+
+        document.querySelector("#musicToggleButton").addEventListener('click', toggleMusic);
+    </script>
+    <button id="musicToggleButton">Toggle Music</button>
 </body>
 </html>
